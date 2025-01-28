@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 2em;
+        }
+        form {
+            max-width: 400px;
+            margin: auto;
+        }
+        input, select, button {
+            display: block;
+            width: 100%;
+            margin: 0.5em 0;
+            padding: 0.5em;
+            font-size: 1em;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .conditional-field {
+            display: none;
+        }
+        .error {
+            color: red;
+            font-size: 0.8em;
+        }
+        header {
+            background-color: #007BFF;
+            color: white;
+            padding: 1em;
+            text-align: center;
+        }
+        nav {
+            text-align: center;
+            margin-top: 1em;
+        }
+        nav a {
+            margin: 0 10px;
+            color: white;
+            text-decoration: none;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        function toggleDriverFields() {
+            const roleSelect = document.getElementById('role');
+            const driverFields = document.getElementById('driver-fields');
+            if (roleSelect.value === '3') {
+                driverFields.style.display = 'block';
+            } else {
+                driverFields.style.display = 'none';
+            }
+        }
+
+        function validateForm(event) {
+    let isValid = true;
+
+    // Clear previous errors
+    document.querySelectorAll('.error').forEach(el => el.textContent = '');
+
+    // Username validation
+    const username = document.getElementById('username');
+    if (!username.value.trim()) {
+        document.getElementById('username-error').textContent = 'Username is required';
+        isValid = false;
+    }
+
+    // Password validation
+    const password = document.getElementById('password');
+    if (!password.value.trim() || password.value.length < 6) {
+        document.getElementById('password-error').textContent = 'Password must be at least 6 characters long';
+        isValid = false;
+    }
+
+    // Email validation
+    const email = document.getElementById('email');
+    const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+    if (!email.value.trim() || !email.value.match(emailPattern)) {
+        document.getElementById('email-error').textContent = 'Please enter a valid email address';
+        isValid = false;
+    }
+
+    // Role validation
+    const roleSelect = document.getElementById('role');
+    if (!roleSelect.value) {
+        document.getElementById('role-error').textContent = 'Role is required';
+        isValid = false;
+    }
+
+    // Driver fields validation
+    const licenseNumber = document.getElementById('license_number');
+    const experienceYears = document.getElementById('experience_years');
+    if (roleSelect.value === '3') {
+        if (!licenseNumber.value.trim()) {
+            document.getElementById('license-number-error').textContent = 'License Number is required';
+            isValid = false;
+        }
+        if (!experienceYears.value || experienceYears.value <= 0) {
+            document.getElementById('experience-years-error').textContent = 'Please enter a valid number of years of experience';
+            isValid = false;
+        }
+    }
+
+    if (!isValid) {
+        event.preventDefault(); // Prevent form submission if validation fails
+    }
+
+    return isValid;
+}
+
+    </script>
+</head>
+<body>
+    <header>
+        <h1>City Connect - Register</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/login">Login</a>
+            <a href="/dashboard">Dashboard</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>User Registration</h2>
+        <form action="/register" method="post" onsubmit="validateForm(event)">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <div id="username-error" class="error"></div>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <div id="password-error" class="error"></div>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <div id="email-error" class="error"></div>
+
+            <label for="phone_number">Phone Number (Optional):</label>
+            <input type="text" id="phone_number" name="phone_number">
+
+            <label for="role">Select Role:</label>
+            <select id="role" name="role_id" required onchange="toggleDriverFields()">
+                <option value="" disabled selected>Select Role</option>
+                {% for role in roles %}
+                    <option value="{{ role.id }}">{{ role.name }}</option>
+                {% endfor %}
+            </select>
+            <div id="role-error" class="error"></div>
+
+            <div id="driver-fields" class="conditional-field">
+                <label for="license_number">License Number:</label>
+                <input type="text" id="license_number" name="license_number">
+                <div id="license-number-error" class="error"></div>
+
+                <label for="experience_years">Years of Experience:</label>
+                <input type="number" id="experience_years" name="experience_years">
+                <div id="experience-years-error" class="error"></div>
+            </div>
+
+            <button type="submit">Register</button>
+        </form>
+    </main>
+</body>
+</html>

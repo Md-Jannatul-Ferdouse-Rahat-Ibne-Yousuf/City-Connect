@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Connect</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+        header {
+            background-color: #007BFF;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        nav {
+            margin-top: 20px;
+            text-align: center;
+        }
+        nav a {
+            display: inline-block;
+            width: 200px;
+            padding: 10px;
+            margin: 10px;
+            color: white;
+            background-color: #007BFF;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 5px;
+        }
+        nav a:hover {
+            background-color: #0056b3;
+        }
+        main {
+            padding: 20px;
+        }
+        section {
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Welcome to City Connect</h1>
+        {% if username %}
+        <p>Hello, {{ username }}! We're glad to have you back.</p>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/logout">Logout</a>
+        </nav>
+        {% else %}
+        <p>You are not logged in. Please log in to access more features.</p>
+        {% endif %}
+    </header>
+
+    <main>
+        <section>
+            <nav>
+                {% if not username %}
+                <a href="/login">Login</a>
+                {% endif %}
+                <a href="/register">Register</a>
+            </nav>
+        </section>
+    </main>
+
+</body>
+</html>

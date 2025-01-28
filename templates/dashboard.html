@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Connect - Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #007BFF;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .actions form {
+            display: inline;
+        }
+        .actions button {
+            margin-left: 5px;
+        }
+        .nav-links {
+            margin-bottom: 20px;
+        }
+        .nav-links a {
+            margin-right: 10px;
+            text-decoration: none;
+            color: #007BFF;
+        }
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/logout">Logout</a>
+        <a href="/register">Register</a>
+    </div>
+    
+    <h1>Dashboard</h1>
+    
+    <h2>Welcome, {{ current_user.username }}!</h2>
+    
+    <h3>Your Information</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Field</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Username</td>
+                <td>{{ current_user.username }}</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>{{ current_user.email }}</td>
+            </tr>
+            <tr>
+                <td>Phone Number</td>
+                <td>{{ current_user.phone_number }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    {% if 'HR Manager' in role_names %} 
+        <h3>HR Actions</h3>
+        <a href="/drivers">View Driver List</a>
+        <a href="/register">Add New Driver</a>
+        <a href="/timetable">View Timetable List</a>
+
+    {% endif %}
+
+    {% if 'Route Manager' in role_names %}  
+        <h3>Route Manager Actions</h3>
+        <a href="/routes">View Route List</a>
+        <a href="/routes/add">Add New Route</a>
+        <a href="/stops">View Stop List</a>
+        <a href="/stops/add">Add New Stop</a>
+        <a href="/timetable">View Timetable List</a>
+        <a href="/timetable/add">Add New Timetable</a>
+    {% endif %}
+
+    {% if 'Fleet Manager' in role_names %}  
+        <h3>Fleet Manager Actions</h3>
+        <a href="/buses">View Bus List</a>
+        <a href="/buses/new">Add New Bus</a>
+        <a href="maintenance">View Bus Maintenance List</a>
+        <a href="maintenance/new">Add New Maintenance</a>
+    {% endif %}
+
+    {% if 'Station Manager' in role_names %}  
+        <h3>Station Manager Actions</h3>
+        <a href="/station">View Station List</a>
+        <a href="/station/add">Add New Station</a>
+        <a href="/route/station">View Route-Station List</a>
+        <a href="/route/station/add">Add New Route-Station</a>
+    {% endif %}
+</body>
+</html>

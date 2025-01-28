@@ -1,0 +1,9 @@
+fastapi
+Jinja2
+PyMySQL
+python-dotenv
+SQLAlchemy
+uvicorn
+python-multipart
+itsdangerous
+cryptography

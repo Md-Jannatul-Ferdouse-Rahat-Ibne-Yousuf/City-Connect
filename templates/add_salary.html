@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Salary Record</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+        }
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        header {
+            background-color: #007BFF;
+            color: white;
+            padding: 1em;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        nav {
+            text-align: center;
+            margin-top: 1em;
+        }
+        nav a {
+            margin: 0 10px;
+            color: white;
+            text-decoration: none;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>City Connect</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/login">Login</a>
+            <a href="/dashboard">Dashboard</a>
+        </nav>
+    </header>
+    <h1>Add New Salary Record</h1>
+    <form action="/add-salary/{{ driver_id }}" method="post">
+        <label for="year">Year:</label>
+        <input type="number" id="year" name="year" required>
+
+        <label for="month">Month:</label>
+        <select id="month" name="month" required>
+            <option value="Jan">January</option>
+            <option value="Feb">February</option>
+            <option value="Mar">March</option>
+            <option value="Apr">April</option>
+            <option value="May">May</option>
+            <option value="Jun">June</option>
+            <option value="Jul">July</option>
+            <option value="Aug">August</option>
+            <option value="Sep">September</option>
+            <option value="Oct">October</option>
+            <option value="Nov">November</option>
+            <option value="Dec">December</option>
+        </select>
+
+        <label for="hourly">Hourly Rate:</label>
+        <input type="number" step="0.01" id="hourly" name="hourly" required>
+
+        <label for="hours_worked">Hours Worked:</label>
+        <input type="number" id="hours_worked" name="hours_worked" required>
+
+        <label for="salary">Total Salary:</label>
+        <input type="number" step="0.01" id="salary" name="salary" required>
+
+        <button type="submit">Add Salary</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Maintenance</title>
+
+    <!-- Bootstrap CSS from static folder -->
+    <link href="/static/bootstrap/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h1 class="h3 mb-0">Add Maintenance</h1>
+            </div>
+            <div class="card-body">
+                <form action="/maintenance/new" method="post">
+                    <div class="mb-3">
+                        <label for="bus_id" class="form-label">Select Bus</label>
+                        <select name="bus_id" id="bus_id" class="form-control" required>
+                            <option value="">Select a Bus</option>
+                            {% for bus in buses %}
+                                <option value="{{ bus.id }}">{{ bus.make }} - {{ bus.model }} ({{ bus.year }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="maintenance_date" class="form-label">Maintenance Date</label>
+                        <input type="date" id="maintenance_date" name="maintenance_date" class="form-control" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success">Add Maintenance</button>
+                    <a href="/maintenance" class="btn btn-secondary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper from static folder -->
+    <script src="/static/bootstrap/bootstrap.bundle.min.js"></script>
+</body>
+</html>

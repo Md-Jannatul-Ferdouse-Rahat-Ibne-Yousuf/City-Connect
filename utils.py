@@ -1,0 +1,27 @@
+from fastapi import Request, Depends, HTTPException, status
+from sqlalchemy.orm import Session
+from database import get_db
+import crud
+
+def get_current_user(request: Request):
+    user = request.session.get("username")
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Not authenticated"
+        )
+    return user
+
+def require_permission(permission: str):
+    def _require_permission(current_user: str = Depends(get_current_user), db: Session = Depends(get_db)):
+        if not current_user:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Not authenticated")
+
+        user_info = crud.get_user_by_username(db, current_user)
+        permissions = crud.get_user_permissions(db, user_info['id'])
+        if permission not in permissions:
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Permission denied")
+        
+        return current_user
+
+    return _require_permission
