@@ -1,0 +1,54 @@
+<!-- Sidebar -->
+<div class="sidebar bg-dark p-3">
+    <!-- Admin Actions -->
+    {% if 'Admin' in role_names %}
+        <div class="list-group">
+            <a href="/create-role" class="list-group-item list-group-item-action">Create Role</a>
+            <a href="/create-permission" class="list-group-item list-group-item-action">Create Permission</a>
+            <a href="/assign-permission" class="list-group-item list-group-item-action">Assign Permission</a>
+            <a href="/register" class="list-group-item list-group-item-action">Add User</a>
+
+        </div>
+    {% endif %}
+
+    <!-- HR Manager Actions -->
+    {% if 'HR Manager' in role_names %}
+        <div class="list-group">
+            <a href="/drivers" class="list-group-item list-group-item-action">View Driver List</a>
+            <a href="/register" class="list-group-item list-group-item-action">Add New Driver</a>
+            <a href="/timetable" class="list-group-item list-group-item-action">View Timetable List</a>
+        </div>
+    {% endif %}
+
+    <!-- Route Manager Actions -->
+    {% if 'Route Manager' in role_names %}
+        <div class="list-group">
+            <a href="/routes" class="list-group-item list-group-item-action">View Route List</a>
+            <a href="/routes/new" class="list-group-item list-group-item-action">Create New Route</a>
+            <a href="/stops" class="list-group-item list-group-item-action">View Stop List</a>
+            <a href="/stops/new" class="list-group-item list-group-item-action">Create New Stop</a>
+            <a href="/timetables" class="list-group-item list-group-item-action">View Timetable List</a>
+            <a href="/timetables/new" class="list-group-item list-group-item-action">Create New Timetable</a>
+        </div>
+    {% endif %}
+
+    <!-- Fleet Manager Actions -->
+    {% if 'Fleet Manager' in role_names %}
+        <div class="list-group">
+            <a href="/buses" class="list-group-item list-group-item-action">View Bus List</a>
+            <a href="/buses/new" class="list-group-item list-group-item-action">Add New Bus</a>
+            <a href="/maintenance" class="list-group-item list-group-item-action">View Bus Maintenance List</a>
+            <a href="/maintenance/new" class="list-group-item list-group-item-action">Add New Maintenance</a>
+        </div>
+    {% endif %}
+
+    <!-- Station Manager Actions -->
+    {% if 'Station Manager' in role_names %}
+        <div class="list-group">
+            <a href="/stations" class="list-group-item list-group-item-action">View Station List</a>
+            <a href="/stations/new" class="list-group-item list-group-item-action">Add New Station</a>
+            <a href="/stops" class="list-group-item list-group-item-action">View Stops List</a>
+            <a href="/stops/new" class="list-group-item list-group-item-action">Add New Stop</a>
+        </div>
+    {% endif %}
+</div>

@@ -4,17 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Role</title>
+    <!-- Linking to Bootstrap from the static folder -->
+    <link rel="stylesheet" href="/static/bootstrap/bootstrap.min.css">
 </head>
 <body>
-    <h1>Create a New Role</h1>
-    <form action="/create-role" method="post">
-        <label for="name">Role Name:</label>
-        <input type="text" id="name" name="name" required>
-        
-        <label for="description">Description:</label>
-        <textarea id="description" name="description" required></textarea>
-        
-        <button type="submit">Create Role</button>
-    </form>
+    <!-- Include Navbar -->
+    {% include 'navbar.html' %}
+
+    <div class="container-fluid d-flex">
+        <!-- Include Sidebar -->
+        {% include 'sidebar.html' %}
+
+        <div class="main-content flex-grow-1 p-4">
+            <h1>Create a New Role</h1>
+            <form action="/create-role" method="post">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Role Name:</label>
+                    <input type="text" id="name" name="name" class="form-control" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description:</label>
+                    <textarea id="description" name="description" class="form-control" required></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Create Role</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Linking Bootstrap JS from the static folder -->
+    <script src="/static/bootstrap/bootstrap.bundle.min.js"></script>
 </body>
 </html>

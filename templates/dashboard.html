@@ -4,117 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>City Connect - Dashboard</title>
+    <!-- Link to local Bootstrap CSS -->
+    <link rel="stylesheet" href="/static/bootstrap/bootstrap.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f9f9f9;
+        /* Custom styles for sidebar */
+        .sidebar {
+            height: 100vh;
+            position: fixed;
+            top: 75px; /* Adjust based on the height of the navbar */
+            left: 0;
+            width: 250px;
+            background-color: #f8f9fa;
+            padding-top: 20px;
+            z-index: 1;
         }
-        h1 {
-            color: #007BFF;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        table, th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-        }
-        th {
-            background-color: #007BFF;
-            color: white;
-        }
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-        .actions form {
-            display: inline;
-        }
-        .actions button {
-            margin-left: 5px;
-        }
-        .nav-links {
-            margin-bottom: 20px;
-        }
-        .nav-links a {
-            margin-right: 10px;
-            text-decoration: none;
-            color: #007BFF;
-        }
-        .nav-links a:hover {
-            text-decoration: underline;
+
+        .content {
+            margin-left: 260px; /* Ensure content is not covered by the sidebar */
+            padding-top: 20px; /* Padding for the content to avoid overlap with navbar */
         }
     </style>
 </head>
-<body>
-    <div class="nav-links">
-        <a href="/">Home</a>
-        <a href="/logout">Logout</a>
-        <a href="/register">Register</a>
+<body class="bg-light">
+    <!-- Include the Navbar -->
+    {% include 'navbar.html' %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar Section -->
+            <div class="col-3">
+                {% include 'sidebar.html' %}
+            </div>
+
+            <!-- Main Content Section -->
+            <div class="col-9 content px-6">
+                <h1 class="text-primary">Dashboard</h1>
+                <h2>Welcome, {{ current_user.username }}!</h2>
+
+                <!-- User Information Table -->
+                <h3>Your Information</h3>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Username</td>
+                            <td>{{ current_user.username }}</td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>{{ current_user.email }}</td>
+                        </tr>
+                        <tr>
+                            <td>Phone Number</td>
+                            <td>{{ current_user.phone_number }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-    
-    <h1>Dashboard</h1>
-    
-    <h2>Welcome, {{ current_user.username }}!</h2>
-    
-    <h3>Your Information</h3>
-    <table>
-        <thead>
-            <tr>
-                <th>Field</th>
-                <th>Value</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Username</td>
-                <td>{{ current_user.username }}</td>
-            </tr>
-            <tr>
-                <td>Email</td>
-                <td>{{ current_user.email }}</td>
-            </tr>
-            <tr>
-                <td>Phone Number</td>
-                <td>{{ current_user.phone_number }}</td>
-            </tr>
-        </tbody>
-    </table>
 
-    {% if 'HR Manager' in role_names %} 
-        <h3>HR Actions</h3>
-        <a href="/drivers">View Driver List</a>
-        <a href="/register">Add New Driver</a>
-        <a href="/timetable">View Timetable List</a>
-
-    {% endif %}
-
-    {% if 'Route Manager' in role_names %}  
-        <h3>Route Manager Actions</h3>
-        <a href="/routes">View Route List</a>
-        <a href="/routes/new">Create New Route</a>
-        <a href="/stops">View Stop List</a>
-        <a href="/stops/new">Create New Stop</a>
-        <a href="/timetables">View Timetable List</a>
-        <a href="/timetables/new">Create New Timetable</a>
-    {% endif %}
-
-    {% if 'Fleet Manager' in role_names %}  
-        <h3>Fleet Manager Actions</h3>
-        <a href="/buses">View Bus List</a>
-        <a href="/buses/new">Add New Bus</a>
-        <a href="maintenance">View Bus Maintenance List</a>
-        <a href="maintenance/new">Add New Maintenance</a>
-    {% endif %}
-
-    {% if 'Station Manager' in role_names %}  
-        <h3>Station Manager Actions</h3>
-        <a href="/stations">View Station List</a>
-        <a href="/stations/new">Add New Station</a>
-        <a href="/stops">View Stops List</a>
-        <a href="/stops/new">Add New Stop</a>
-    {% endif %}
+    <!-- Link to local Bootstrap JS -->
+    <script src="/static/bootstrap/bootstrap.bundle.min.js"></script>
 </body>
 </html>

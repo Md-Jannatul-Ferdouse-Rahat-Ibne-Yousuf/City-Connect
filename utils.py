@@ -4,13 +4,17 @@ from database import get_db
 import crud
 
 def get_current_user(request: Request):
-    user = request.session.get("username")
-    if not user:
+    current_user = []
+    current_user["username"] = request.session.get("username")
+    current_user["role_names"] = request.session.get("role_names")
+    current_user["permissions"] = request.session.get("permissions")
+
+    if not current_user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Not authenticated"
         )
-    return user
+    return current_user
 
 def require_permission(permission: str):
     def _require_permission(current_user: str = Depends(get_current_user), db: Session = Depends(get_db)):

@@ -15,8 +15,14 @@ register_router = APIRouter()
 @register_router.get("/register", response_class=HTMLResponse)
 def register_form(request: Request, db: Session = Depends(get_db)):
     roles = crud.get_roles(db)  
+    username = request.session.get("username") 
+    permissions = ""
+    if username:
+        user = crud.get_user_by_username(db, username)
+        user_id = user['id'] 
+        permissions = crud.get_user_permissions(db, user_id)
     return templates.TemplateResponse(
-        "register.html", {"request": request, "roles": roles}
+        "register.html", {"request": request, "roles": roles, "username": username, "permissions": permissions}
     )
 
 
