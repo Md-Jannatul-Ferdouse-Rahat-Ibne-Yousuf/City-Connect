@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS stations (
 create_routes_table = """
 CREATE TABLE IF NOT EXISTS routes (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(20) NOT NULL,
+    name VARCHAR(250) NOT NULL,
     origin_id INT NOT NULL,
     destination_id INT NOT NULL,
     FOREIGN KEY (origin_id) REFERENCES stations(id) ON DELETE CASCADE,
@@ -108,25 +108,14 @@ CREATE TABLE IF NOT EXISTS routes (
 );
 """
 
-create_route_stations_table = """
-CREATE TABLE IF NOT EXISTS route_stations (
+create_stops_table = """
+CREATE TABLE IF NOT EXISTS stops (
     id INT AUTO_INCREMENT PRIMARY KEY,
     route_id INT NOT NULL,
     station_id INT NOT NULL,
-    station_sequence INT NOT NULL,
+    stop_number INT NOT NULL,
     FOREIGN KEY (route_id) REFERENCES routes(id) ON DELETE CASCADE,
     FOREIGN KEY (station_id) REFERENCES stations(id) ON DELETE CASCADE
-);
-"""
-
-create_stop_table = """
-CREATE TABLE IF NOT EXISTS stops (
-    station_id INT NOT NULL,
-    route_id INT NOT NULL,
-    stop_number INT NOT NULL,
-    PRIMARY KEY (station_id, route_id, stop_number),
-    FOREIGN KEY (station_id) REFERENCES stations(id) ON DELETE CASCADE,
-    FOREIGN KEY (route_id) REFERENCES routes(id) ON DELETE CASCADE
 );
 """
 
@@ -206,8 +195,8 @@ def create_tables(db: Session):
     db.execute(text(create_customers_table))
     db.execute(text(create_stations_table))
     db.execute(text(create_routes_table))
-    db.execute(text(create_route_stations_table))
-    db.execute(text(create_stop_table))
+    db.execute(text(create_stops_table))
+    db.execute(text(create_stops_table))
     db.execute(text(create_bus_table))
     db.execute(text(create_maintenance_table))
     db.execute(text(create_timetable_table))

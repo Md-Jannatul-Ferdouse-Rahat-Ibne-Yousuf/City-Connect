@@ -74,22 +74,21 @@ async def update_station(
         )
 
 
-@station_router.get("/route/stations", response_class=HTMLResponse)
-async def get_router_stations(request: Request, db: Session = Depends(get_db), current_user: dict = Depends(require_permission("ManageStations"))):
+@station_router.get("router/station", response_class=HTMLResponse)
+async def get_stations(request: Request, db: Session = Depends(get_db), current_user: dict = Depends(require_permission("ManageStations"))):
     try:
         router_stations = crud.get_router_stations(db)
-        return templates.TemplateResponse("route_stations.html", {"request": request, "router_stations": router_stations})
+        return templates.TemplateResponse("router_stations.html", {"request": request, "router_stations": router_stations})
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
 
 
-@station_router.get("/route/stations/new", response_class=HTMLResponse)
-async def create_route_station(request: Request, db: Session = Depends(get_db), current_user: dict = Depends(require_permission("ManageStations"))):
-    stations = crud.get_stations(db)
-    return templates.TemplateResponse("create_route_station.html", {"request": request, "stations": stations})
+@station_router.get("router/station/new", response_class=HTMLResponse)
+async def create_station(request: Request, db: Session = Depends(get_db), current_user: dict = Depends(require_permission("ManageStations"))):
+    return templates.TemplateResponse("create_station.html", {"request": request})
 
-@station_router.post("/route/stations/new")
+@station_router.post("router/stations/new")
 async def create_station(
     name: str = Form(...), 
     db: Session = Depends(get_db), current_user: dict = Depends(require_permission("ManageStations"))

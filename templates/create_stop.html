@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Stop</title>
+
+    <!-- Bootstrap CSS from static folder -->
+    <link href="/static/bootstrap/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h1 class="h3 mb-0">Create Stop</h1>
+            </div>
+            <div class="card-body">
+                <form action="/stops/new" method="post">
+                    <div class="mb-3">
+                        <label for="route_id" class="form-label">Select Route</label>
+                        <select name="route_id" id="route_id" class="form-control" required>
+                            <option value="">Select a Route</option>
+                            {% for route in routes %}
+                                <option value="{{ route.id }}">{{ route.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="station_id" class="form-label">Select Station</label>
+                        <select name="station_id" id="station_id" class="form-control" required>
+                            <option value="">Select a Station</option>
+                            {% for station in stations %}
+                                <option value="{{ station.id }}">{{ station.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="stop_number" class="form-label">Stop Number</label>
+                        <input type="number" id="stop_number" name="stop_number" class="form-control" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success">Create Stop</button>
+                    <a href="/stops" class="btn btn-secondary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper from static folder -->
+    <script src="/static/bootstrap/bootstrap.bundle.min.js"></script>
+</body>
+</html>

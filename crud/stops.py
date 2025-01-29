@@ -2,30 +2,32 @@ from sqlalchemy.orm import Session
 from sqlalchemy.sql import text
 from sqlalchemy.exc import SQLAlchemyError
 
-def get_router_stations(db: Session):
+def get_stops(db: Session):
     query = text("""
         SELECT 
                 rs.id,
                 rs.route_id,
                 rs.station_id,
-                rs.station_sequence,
+                rs.stop_number,
                 s.name
-        FROM route_stations rs
+        FROM stops rs
         INNER JOIN stations s ON rs.station_id = s.id
                  
     """)
     result = db.execute(query)
     return [dict(row) for row in result.mappings()] if result else []
 
-def create_station(db: Session, name: str):
+def create_stop(db: Session, route_id: int, station_id: int, stop_number: int):
 
     insert_station_query = text("""
-        INSERT INTO stations (name)
-        VALUES (:name)
+        INSERT INTO stops (route_id, station_id, stop_number)
+        VALUES (:route_id, :station_id, :stop_number)
     """)
 
     db.execute(insert_station_query, {
-        "name": name
+        "route_id": route_id,
+        "station_id": station_id,
+        "stop_number": stop_number
     })
 
     db.commit()

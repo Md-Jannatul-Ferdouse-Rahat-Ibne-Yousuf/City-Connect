@@ -153,8 +153,8 @@
             <input type="text" id="phone_number" name="phone_number">
 
             <label for="role">Select Role:</label>
-            <select id="role" name="role_id" required onchange="toggleDriverFields()">
-                <option value="" disabled selected>Select Role</option>
+            <select id="role" name="role_id" required onchange="toggleDriverFields()" {% if not is_logged_in %} disabled {% endif %}>
+                <option value="1" {% if not is_logged_in %} selected {% endif %}>Customer</option>
                 {% for role in roles %}
                     <option value="{{ role.id }}">{{ role.name }}</option>
                 {% endfor %}

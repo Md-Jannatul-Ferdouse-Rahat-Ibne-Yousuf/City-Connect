@@ -94,11 +94,11 @@
     {% if 'Route Manager' in role_names %}  
         <h3>Route Manager Actions</h3>
         <a href="/routes">View Route List</a>
-        <a href="/routes/create">Create New Route</a>
+        <a href="/routes/new">Create New Route</a>
         <a href="/stops">View Stop List</a>
-        <a href="/stops/create">Create New Stop</a>
-        <a href="/timetable">View Timetable List</a>
-        <a href="/timetable/create">Create New Timetable</a>
+        <a href="/stops/new">Create New Stop</a>
+        <a href="/timetables">View Timetable List</a>
+        <a href="/timetables/new">Create New Timetable</a>
     {% endif %}
 
     {% if 'Fleet Manager' in role_names %}  
@@ -113,8 +113,8 @@
         <h3>Station Manager Actions</h3>
         <a href="/stations">View Station List</a>
         <a href="/stations/new">Add New Station</a>
-        <a href="/route/stations">View Route-Station List</a>
-        <a href="/route/stations/new">Add New Route-Station</a>
+        <a href="/stops">View Stops List</a>
+        <a href="/stops/new">Add New Stop</a>
     {% endif %}
 </body>
 </html>

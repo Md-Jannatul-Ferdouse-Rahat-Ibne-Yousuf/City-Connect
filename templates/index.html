@@ -4,73 +4,136 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>City Connect</title>
+    
+    <!-- Bootstrap CSS from CDN -->
+    <link rel="stylesheet" href="/static/bootstrap/bootstrap.min.css">
+    <!-- SweetAlert2 for better alerts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
             background-color: #f9f9f9;
         }
-        header {
-            background-color: #007BFF;
-            color: white;
-            padding: 20px;
-            text-align: center;
+        .carousel-item img {
+            height: 400px;
+            object-fit: cover;
         }
-        nav {
-            margin-top: 20px;
-            text-align: center;
+        .card {
+            transition: transform 0.2s ease-in-out;
         }
-        nav a {
-            display: inline-block;
-            width: 200px;
-            padding: 10px;
-            margin: 10px;
-            color: white;
-            background-color: #007BFF;
-            text-decoration: none;
-            text-align: center;
-            border-radius: 5px;
-        }
-        nav a:hover {
-            background-color: #0056b3;
-        }
-        main {
-            padding: 20px;
-        }
-        section {
-            margin-bottom: 20px;
-        }
-        h2 {
-            color: #333;
+        .card:hover {
+            transform: scale(1.05);
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Welcome to City Connect</h1>
-        {% if username %}
-        <p>Hello, {{ username }}! We're glad to have you back.</p>
-        <nav>
-            <a href="/">Home</a>
-            <a href="/dashboard">Dashboard</a>
-            <a href="/logout">Logout</a>
-        </nav>
-        {% else %}
-        <p>You are not logged in. Please log in to access more features.</p>
-        {% endif %}
-    </header>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">City Connect</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    {% if username %}
+                        <li class="nav-item"><a class="nav-link" href="/dashboard">Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link btn btn-danger text-white px-3" href="/logout">Logout</a></li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+                        <li class="nav-item"><a class="nav-link btn btn-secondary text-white px-3" href="/register">Register</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-    <main>
-        <section>
-            <nav>
-                {% if not username %}
-                <a href="/login">Login</a>
-                {% endif %}
-                <a href="/register">Register</a>
-            </nav>
-        </section>
-    </main>
+    <!-- Carousel -->
+    <div id="cityCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="/static/images/carousel-1.jpg" class="d-block w-100" alt="City Transport">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Seamless City Travel</h5>
+                    <p>Find the best routes and travel effortlessly.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="/static/images/carousel-2.jpg" class="d-block w-100" alt="Bus Travel">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Fast & Reliable Buses</h5>
+                    <p>Enjoy well-planned routes with real-time schedules.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="/static/images/carousel-3.jpg" class="d-block w-100" alt="Bus Travel">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Fast & Reliable Buses</h5>
+                    <p>Enjoy well-planned routes with real-time schedules.</p>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#cityCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#cityCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+
+    <!-- Card Section -->
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Explore City Routes</h2>
+    <div class="row">
+        {% if routes %}
+            {% for route in routes %}
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow">
+                        <img src="/static/images/route_photo.jpg" class="card-img-top" alt="Route Image">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ route.name }}</h5>
+                            <p class="card-text">
+                                <strong>From:</strong> {{ route.origin_name }} <br>
+                                <strong>To:</strong> {{ route.destination_name }}
+                            </p>
+                            <a href="/route/{{ route.id }}" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-center">No routes available.</p>
+        {% endif %}
+    </div>
+</div>
+
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+        <p class="mb-0">&copy; 2025 City Connect. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Bootstrap JS from CDN -->
+    <script src="/static/bootstrap/bootstrap.bundle.min.js"></script>
+
+    <!-- Example SweetAlert2 Usage -->
+    <script>
+        function showWelcomeMessage() {
+            Swal.fire({
+                title: 'Welcome to City Connect!',
+                text: 'Find the best routes and travel effortlessly.',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        }
+
+        // Show alert on page load if user is logged in
+        // {% if username %}
+        //     document.addEventListener("DOMContentLoaded", showWelcomeMessage);
+        // {% endif %}
+    </script>
 
 </body>
 </html>

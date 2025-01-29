@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Router-Station List</title>
+    <title>Stops List</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
@@ -38,25 +38,25 @@
         </nav>
     </header>
     <div class="container mt-5">
-        <h1 class="mb-4">Route-Station List</h1>
+        <h1 class="mb-4">Stops List</h1>
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
                     <th>Route ID</th>
                     <th>Station ID</th>
                     <th>Station Name</th>
-                    <th>Station Sequence</th>
+                    <th>Stop Number</th>
                 </tr>
             </thead>
             <tbody>
-                {% for route_station in route_stations %}
+                {% for stop in stops %}
                 <tr>
-                    <td>{{ route_station.route_id }}</td>
-                    <td>{{ route_station.station_id }}</td>
-                    <td>{{ route_station.name }}</td>
-                    <td>{{ route_station.station_sequence }}</td>    
+                    <td>{{ stop.route_id }}</td>
+                    <td>{{ stop.station_id }}</td>
+                    <td>{{ stop.name }}</td>
+                    <td>{{ stop.stop_number }}</td>    
                     <td>
-                        <a href="/route-stations/{{ route_station.id }}/edit/" class="btn btn-sm btn-warning">Edit</a>
+                        <a href="/stops/{{ stop.id }}/edit/" class="btn btn-sm btn-warning">Edit</a>
                     </td>
                 </tr>
                 {% endfor %}

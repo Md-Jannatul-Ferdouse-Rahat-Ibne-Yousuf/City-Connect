@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bus List</title>
+    <title>Routes List</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
@@ -38,26 +38,29 @@
         </nav>
     </header>
     <div class="container mt-5">
-        <h1 class="mb-4">Bus List</h1>
+        <h1 class="mb-4">Route List</h1>
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
-                    <th>Bus ID</th>
-                    <th>Make</th>
-                    <th>Model</th>
-                    <th>Year</th>
-                    <th>Actions</th>
+                    <th>Route ID</th>
+                    <th>Name</th>
+                    <th>Origin ID</th>
+                    <th>Origin Name</th>
+                    <th>Destination ID</th>
+                    <th>Destination Name</th>
                 </tr>
             </thead>
             <tbody>
-                {% for bus in buses %}
+                {% for route in routes %}
                 <tr>
-                    <td>{{ bus.id }}</td>
-                    <td>{{ bus.make }}</td>
-                    <td>{{ bus.model }}</td>
-                    <td>{{ bus.year }}</td>    
+                    <td>{{ route.id }}</td>
+                    <td>{{ route.name }}</td>
+                    <td>{{ route.origin_id }}</td>
+                    <td>{{ route.origin_name }}</td>   
+                    <td>{{ route.destination_id }}</td>
+                    <td>{{ route.destination_name }}</td>    
                     <td>
-                        <a href="/buses/{{ bus.id }}/edit/" class="btn btn-sm btn-warning">Edit</a>
+                        <a href="/routees/{{ route.id }}/edit/" class="btn btn-sm btn-warning">Edit</a>
                     </td>
                 </tr>
                 {% endfor %}
