@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Route-Station</title>
+
+    <!-- Bootstrap CSS from static folder -->
+    <link href="/static/bootstrap/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h1 class="h3 mb-0">Create Route-Station</h1>
+            </div>
+            <div class="card-body">
+                <form action="/route/stations/new" method="post">
+                    <div class="mb-3">
+                        <label for="route_id" class="form-label">Select Route</label>
+                        <select name="route_id" id="route_id" class="form-control" required>
+                            <option value="">Select a Route</option>
+                            {% for route in routes %}
+                                <option value="{{ route.id }}">{{ route.make }} - {{ route.model }} ({{ route.year }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="station_id" class="form-label">Select Station</label>
+                        <select name="station_id" id="station_id" class="form-control" required>
+                            <option value="">Select a Station</option>
+                            {% for station in stations %}
+                                <option value="{{ station.id }}">{{ station.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="station_sequence" class="form-label">Station Sequence</label>
+                        <input type="int" id="station_sequence" name="station_sequence" class="form-control" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success">Create Route Station</button>
+                    <a href="/route/stations" class="btn btn-secondary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper from static folder -->
+    <script src="/static/bootstrap/bootstrap.bundle.min.js"></script>
+</body>
+</html>

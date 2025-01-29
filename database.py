@@ -90,9 +90,9 @@ CREATE TABLE IF NOT EXISTS customers (
 );
 """
 
-create_station_table = """
+create_stations_table = """
 CREATE TABLE IF NOT EXISTS stations (
-    id INT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(20) NOT NULL
 );
 """
@@ -204,7 +204,7 @@ def create_tables(db: Session):
     db.execute(text(create_role_permission_table))
     db.execute(text(create_drivers_table))
     db.execute(text(create_customers_table))
-    db.execute(text(create_station_table))
+    db.execute(text(create_stations_table))
     db.execute(text(create_routes_table))
     db.execute(text(create_route_stations_table))
     db.execute(text(create_stop_table))

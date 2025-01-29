@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Station</title>
+
+    <!-- Bootstrap CSS from static folder -->
+    <link href="/static/bootstrap/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h1 class="h3 mb-0">Edit Station</h1>
+            </div>
+            <div class="card-body">
+                <form action="/stations/{{ station.id }}/edit" method="post">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Station Name</label>
+                        <input type="text" id="name" name="name" class="form-control" value="{{ station.name }}" required>
+                    </div>
+                    <button type="submit" class="btn btn-success">Update Station</button>
+                    <a href="/station" class="btn btn-secondary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper from static folder -->
+    <script src="/static/bootstrap/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

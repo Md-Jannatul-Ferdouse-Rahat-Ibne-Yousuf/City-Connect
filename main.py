@@ -12,6 +12,7 @@ from routes.register import register_router
 from routes.driver import driver_router
 from routes.hr import hr_router
 from routes.fleet_manager import fleet_router
+from routes.station_manager import station_router
 # from routes.role_management import role_router
 # from routes.driver_management import driver_router
 # from routes.timetable import timetable_router
@@ -36,7 +37,7 @@ app.include_router(dashboard_router)
 app.include_router(register_router)
 app.include_router(hr_router)
 app.include_router(fleet_router)
-
+app.include_router(station_router)
 
 # app.include_router(role_router)
 # app.include_router(driver_router)
