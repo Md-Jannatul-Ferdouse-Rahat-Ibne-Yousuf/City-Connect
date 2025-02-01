@@ -63,12 +63,16 @@ def register_user(
         elif role_id == 3:
             crud.create_driver(db, user_id, license_number, experience_years)
 
-        user = crud.get_user_by_username(db, current_user["username"])
-        user_id = user["id"]
-        
-        # Fetch roles of the current user
-        roles = crud.get_user_roles(db, user_id)
-        role_names = [role['name'] for role in roles]
+        role_names = []
+        try:
+            user = crud.get_user_by_username(db, current_user["username"])
+            user_id = user["id"]
+            
+            # Fetch roles of the current user
+            roles = crud.get_user_roles(db, user_id)
+            role_names = [role['name'] for role in roles]
+        except:
+            pass
         return templates.TemplateResponse(
         "index.html", {"request": request, "current_user": user, "role_names": role_names}
     )
