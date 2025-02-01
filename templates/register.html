@@ -108,7 +108,7 @@
                 <!-- {{ roles }} -->
                 <select id="role" name="role_id" class="form-select" required onchange="toggleDriverFields()" {% if not username %} disabled {% endif %}>
                     {% if not username %}
-                        <option value="1" {% if not username %} selected {% endif %}>Customer</option>
+                        <option value="1" selected>Customer</option>
                     {% endif %}
                     {% if 'FullAccess' in permissions %}
                         {% for role in roles %}
@@ -122,8 +122,14 @@
                         {% endfor %}
                     {% endif %}
                 </select>
+            
+                {% if not username %}
+                    <input type="hidden" name="role_id" value="1">
+                {% endif %}
+            
                 <div id="role-error" class="error"></div>
             </div>
+            
     
             <div id="driver-fields" class="conditional-field">
                 <div class="mb-3">
