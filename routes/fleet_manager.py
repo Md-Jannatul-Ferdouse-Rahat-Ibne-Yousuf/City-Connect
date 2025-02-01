@@ -15,7 +15,13 @@ fleet_router = APIRouter()
 async def get_buses(request: Request, db: Session = Depends(get_db), current_user: dict = Depends(require_permission("ManageBusFleet"))):
     try:
         buses = crud.get_buses(db)
-        return templates.TemplateResponse("buses.html", {"request": request, "buses": buses})
+        user = crud.get_user_by_username(db, current_user["username"])
+        user_id = user["id"]
+        
+        # Fetch roles of the current user
+        roles = crud.get_user_roles(db, user_id)
+        role_names = [role['name'] for role in roles]
+        return templates.TemplateResponse("buses.html", {"request": request, "buses": buses, "current_user": user, "role_names": role_names})
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
     
@@ -61,7 +67,13 @@ async def update_bus(
 
 @fleet_router.get("/buses/new", response_class=HTMLResponse)
 async def create_bus(request: Request, db: Session = Depends(get_db), current_user: dict = Depends(require_permission("ManageBusFleet"))):
-    return templates.TemplateResponse("add_bus.html", {"request": request})
+    user = crud.get_user_by_username(db, current_user["username"])
+    user_id = user["id"]
+    
+    # Fetch roles of the current user
+    roles = crud.get_user_roles(db, user_id)
+    role_names = [role['name'] for role in roles]
+    return templates.TemplateResponse("add_bus.html", {"request": request, "current_user": user, "role_names": role_names})
 
 @fleet_router.post("/buses/new")
 async def create_bus(
@@ -80,7 +92,13 @@ async def create_bus(
 async def get_maintenance(request: Request, db: Session = Depends(get_db), current_user: dict = Depends(require_permission("ManageBusFleet"))):
     try:
         maintenances = crud.get_maintenance(db)
-        return templates.TemplateResponse("maintenance.html", {"request": request, "maintenances": maintenances})
+        user = crud.get_user_by_username(db, current_user["username"])
+        user_id = user["id"]
+        
+        # Fetch roles of the current user
+        roles = crud.get_user_roles(db, user_id)
+        role_names = [role['name'] for role in roles]
+        return templates.TemplateResponse("maintenance.html", {"request": request, "maintenances": maintenances, "current_user": user, "role_names": role_names})
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
     
@@ -89,8 +107,13 @@ async def get_maintenance(request: Request, db: Session = Depends(get_db), curre
 async def create_maintenance(request: Request, db: Session = Depends(get_db), current_user: dict = Depends(require_permission("ManageBusFleet"))):
     try:
         buses = crud.get_buses(db)
+        user = crud.get_user_by_username(db, current_user["username"])
+        user_id = user["id"]
         
-        return templates.TemplateResponse("add_maintenance.html", {"request": request, "buses": buses})
+        # Fetch roles of the current user
+        roles = crud.get_user_roles(db, user_id)
+        role_names = [role['name'] for role in roles]
+        return templates.TemplateResponse("add_maintenance.html", {"request": request, "buses": buses, "current_user": user, "role_names": role_names})
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Error fetching buses details: {str(e)}")
 

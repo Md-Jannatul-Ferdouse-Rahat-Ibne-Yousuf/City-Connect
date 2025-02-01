@@ -5,13 +5,12 @@ from sqlalchemy.exc import SQLAlchemyError
 def get_stops(db: Session):
     query = text("""
         SELECT 
-                rs.id,
-                rs.route_id,
-                rs.station_id,
-                rs.stop_number,
+                st.route_id,
+                st.station_id,
+                st.stop_number,
                 s.name
-        FROM stops rs
-        INNER JOIN stations s ON rs.station_id = s.id
+        FROM stops st
+        INNER JOIN stations s ON st.station_id = s.id
                  
     """)
     result = db.execute(query)

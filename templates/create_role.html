@@ -6,30 +6,61 @@
     <title>Create Role</title>
     <!-- Linking to Bootstrap from the static folder -->
     <link rel="stylesheet" href="/static/bootstrap/bootstrap.min.css">
+    <style>
+        .form-container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-top: 30px;
+        }
+        .form-title {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        .btn-custom {
+            background-color: #3498db;
+            color: white;
+            border-radius: 5px;
+            padding: 10px 20px;
+            transition: background-color 0.3s ease;
+        }
+        .btn-custom:hover {
+            background-color: #2980b9;
+        }
+        .form-label {
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
     <!-- Include Navbar -->
     {% include 'navbar.html' %}
 
     <div class="container-fluid d-flex">
-        <!-- Include Sidebar -->
-        {% include 'sidebar.html' %}
+        <!-- Sidebar Section -->
+        <div class="col-3">
+            {% include 'sidebar.html' %}
+        </div>
 
-        <div class="main-content flex-grow-1 p-4">
-            <h1>Create a New Role</h1>
-            <form action="/create-role" method="post">
-                <div class="mb-3">
-                    <label for="name" class="form-label">Role Name:</label>
-                    <input type="text" id="name" name="name" class="form-control" required>
-                </div>
-                
-                <div class="mb-3">
-                    <label for="description" class="form-label">Description:</label>
-                    <textarea id="description" name="description" class="form-control" required></textarea>
-                </div>
-                
-                <button type="submit" class="btn btn-primary">Create Role</button>
-            </form>
+        <!-- Main Content Section -->
+        <div class="col-9 main-content p-4">
+            <div class="form-container">
+                <h1 class="form-title">Create a New Role</h1>
+                <form action="/create-role" method="post">
+                    <div class="mb-4">
+                        <label for="name" class="form-label">Role Name:</label>
+                        <input type="text" id="name" name="name" class="form-control" required placeholder="Enter role name">
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="description" class="form-label">Description:</label>
+                        <textarea id="description" name="description" class="form-control" required placeholder="Enter a brief description"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-custom btn-lg w-100">Create Role</button>
+                </form>
+            </div>
         </div>
     </div>
 

@@ -9,20 +9,34 @@
     <link href="/static/bootstrap/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container mt-5">
-        <div class="card shadow-sm">
-            <div class="card-header bg-primary text-white">
-                <h1 class="h3 mb-0">Create Station</h1>
+    <!-- Include Navbar -->
+    {% include 'navbar.html' %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Include Sidebar -->
+            <div class="col-md-3">
+                {% include 'sidebar.html' %}
             </div>
-            <div class="card-body">
-                <form action="/stations/new" method="post">
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Station Name</label>
-                        <input type="text" id="name" name="name" class="form-control" required></textarea>
+
+            <div class="col-md-9">
+                <div class="container mt-5">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-primary text-white">
+                            <h1 class="h3 mb-0">Create Station</h1>
+                        </div>
+                        <div class="card-body">
+                            <form action="/stations/new" method="post">
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Station Name</label>
+                                    <input type="text" id="name" name="name" class="form-control" required>
+                                </div>
+                                <button type="submit" class="btn btn-success">Create Station</button>
+                                <a href="/stations" class="btn btn-secondary">Cancel</a>
+                            </form>
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-success">Create Station</button>
-                    <a href="/stations" class="btn btn-secondary">Cancel</a>
-                </form>
+                </div>
             </div>
         </div>
     </div>

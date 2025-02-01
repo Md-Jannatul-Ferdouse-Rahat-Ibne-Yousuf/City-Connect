@@ -16,9 +16,16 @@ admin_router = APIRouter()
 @admin_router.get("/create-role")
 def create_role(
     request: Request,
+    db: Session = Depends(get_db),
     current_user: dict = Depends(require_permission("FullAccess"))
 ):
-    return templates.TemplateResponse("create_role.html", {"request": request})
+    user = crud.get_user_by_username(db, current_user["username"])
+    user_id = user["id"]
+    
+    # Fetch roles of the current user
+    roles = crud.get_user_roles(db, user_id)
+    role_names = [role['name'] for role in roles]
+    return templates.TemplateResponse("create_role.html", {"request": request, "current_user": user, "role_names": role_names})
     
 
 @admin_router.post("/create-role")
@@ -40,9 +47,16 @@ def create_role(
 @admin_router.get("/create-permission", response_class=HTMLResponse)
 def create_permission_form(
     request: Request,
+    db: Session = Depends(get_db),
     current_user: dict = Depends(require_permission("FullAccess"))
     ):
-    return templates.TemplateResponse("create_permission.html", {"request": request})
+    user = crud.get_user_by_username(db, current_user["username"])
+    user_id = user["id"]
+    
+    # Fetch roles of the current user
+    user_roles = crud.get_user_roles(db, user_id)
+    role_names = [role['name'] for role in user_roles]
+    return templates.TemplateResponse("create_permission.html", {"request": request, "current_user": user, "role_names": role_names})
 
 
 @admin_router.post("/create-permission")
@@ -68,7 +82,18 @@ def assign_permission_form(
     ):
     roles = crud.get_roles(db)
     permissions = crud.get_permissions(db)
-    return templates.TemplateResponse("assign_permission.html", {"request": request, "roles": roles, "permissions": permissions})
+
+    user = crud.get_user_by_username(db, current_user["username"])
+    user_id = user["id"]
+    
+    # Fetch roles of the current user
+    user_roles = crud.get_user_roles(db, user_id)
+    role_names = [role['name'] for role in user_roles]
+    return templates.TemplateResponse("assign_permission.html", {"request": request, 
+                                                                 "roles": roles, 
+                                                                 "permissions": permissions, 
+                                                                 "current_user": user, 
+                                                                 "role_names": role_names})
 
 
 @admin_router.post("/assign-permission")

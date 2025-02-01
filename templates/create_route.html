@@ -5,47 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Route</title>
 
-    <!-- Bootstrap CSS from static folder -->
-    <link href="/static/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container mt-5">
-        <div class="card shadow-sm">
-            <div class="card-header bg-primary text-white">
-                <h1 class="h3 mb-0">Create Route</h1>
+    <!-- Include Navbar -->
+    {% include 'navbar.html' %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Include Sidebar -->
+            <div class="col-md-3">
+                {% include 'sidebar.html' %}
             </div>
-            <div class="card-body">
-                <form action="/routes/new" method="post">
-                    <div class="mb-3">
-                        <label for="route_name" class="form-label">Name of Route</label>
-                        <input type="text" id="route_name" name="route_name" class="form-control" required></textarea>
+
+            <div class="col-md-9">
+                <div class="container mt-5">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-primary text-white">
+                            <h1 class="h3 mb-0">Create Route</h1>
+                        </div>
+                        <div class="card-body">
+                            <form action="/routes/new" method="post">
+                                <div class="mb-3">
+                                    <label for="route_name" class="form-label">Name of Route</label>
+                                    <input type="text" id="route_name" name="route_name" class="form-control" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="origin_id" class="form-label">Select Origin Station</label>
+                                    <select name="origin_id" id="origin_id" class="form-control" required>
+                                        <option value="">Select a Station</option>
+                                        {% for station in stations %}
+                                            <option value="{{ station.id }}">{{ station.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="destination_id" class="form-label">Select Destination Station</label>
+                                    <select name="destination_id" id="destination_id" class="form-control" required>
+                                        <option value="">Select a Station</option>
+                                        {% for station in stations %}
+                                            <option value="{{ station.id }}">{{ station.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-success">Create Route</button>
+                                <a href="/routes" class="btn btn-secondary">Cancel</a>
+                            </form>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="origin_id" class="form-label">Select Origin Station</label>
-                        <select name="origin_id" id="origin_id" class="form-control" required>
-                            <option value="">Select a Station</option>
-                            {% for station in stations %}
-                                <option value="{{ station.id }}">{{ station.name }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="destination_id" class="form-label">Select Destination Station</label>
-                        <select name="destination_id" id="destination_id" class="form-control" required>
-                            <option value="">Select a Station</option>
-                            {% for station in stations %}
-                                <option value="{{ station.id }}">{{ station.name }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-success">Create Route Station</button>
-                    <a href="/routes" class="btn btn-secondary">Cancel</a>
-                </form>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Bootstrap Bundle with Popper from static folder -->
-    <script src="/static/bootstrap/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

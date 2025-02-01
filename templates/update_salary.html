@@ -3,54 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Salary</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 20px;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-        label, input, select {
-            margin-bottom: 10px;
-        }
-    </style>
+    <title>Update Driver Salary</title>
+    <!-- Link to local Bootstrap CSS -->
+    <link rel="stylesheet" href="/static/bootstrap/bootstrap.min.css">
 </head>
-<body>
-    <h1>Update Salary for Driver ID: {{ salary_record.driver_id }}</h1>
-    <form action="/update-salary/{{ salary_id }}" method="post">
-        <label for="year">Year:</label>
-        <input type="number" id="year" name="year" value="{{ salary_record.year }}" required>
+<body class="bg-light">
+    <!-- Include the Navbar -->
+    {% include 'navbar.html' %}
 
-        <label for="month">Month:</label>
-        <select id="month" name="month" required>
-            <option value="Jan" {% if salary_record.month == 'Jan' %}selected{% endif %}>January</option>
-            <option value="Feb" {% if salary_record.month == 'Feb' %}selected{% endif %}>February</option>
-            <option value="Mar" {% if salary_record.month == 'Mar' %}selected{% endif %}>March</option>
-            <option value="Apr" {% if salary_record.month == 'Apr' %}selected{% endif %}>April</option>
-            <option value="May" {% if salary_record.month == 'May' %}selected{% endif %}>May</option>
-            <option value="Jun" {% if salary_record.month == 'Jun' %}selected{% endif %}>June</option>
-            <option value="Jul" {% if salary_record.month == 'Jul' %}selected{% endif %}>July</option>
-            <option value="Aug" {% if salary_record.month == 'Aug' %}selected{% endif %}>August</option>
-            <option value="Sep" {% if salary_record.month == 'Sep' %}selected{% endif %}>September</option>
-            <option value="Oct" {% if salary_record.month == 'Oct' %}selected{% endif %}>October</option>
-            <option value="Nov" {% if salary_record.month == 'Nov' %}selected{% endif %}>November</option>
-            <option value="Dec" {% if salary_record.month == 'Dec' %}selected{% endif %}>December</option>
-        </select>
+    <div class="container-fluid d-flex align-items-center justify-content-center" style="min-height: 80vh; margin-top: 30px;">
+        <div class="row w-100">
+            <!-- Sidebar Section -->
+            <div class="col-3 d-none d-md-block">
+                {% include 'sidebar.html' %}
+            </div>
 
-        <label for="hourly">Hourly Rate:</label>
-        <input type="number" step="0.01" id="hourly" name="hourly" value="{{ salary_record.hourly }}" required>
+            <!-- Main Content Section -->
+            <div class="col-12 col-md-9 content px-6">
+                <h1 class="text-primary text-center mb-4">Update Driver Salary</h1>
 
-        <label for="hours_worked">Hours Worked:</label>
-        <input type="number" id="hours_worked" name="hours_worked" value="{{ salary_record.hours_worked }}" required>
+                <!-- Update Driver Salary Form -->
+                <div class="card shadow-lg p-4 mx-auto" style="max-width: 600px;">
+                    <form method="POST" action="/driver-salary">
+                        <div class="mb-3">
+                            <label for="driver_id" class="form-label">Driver ID</label>
+                            <input type="number" class="form-control" id="driver_id" name="driver_id" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="salary" class="form-label">New Salary</label>
+                            <input type="number" class="form-control" id="salary" name="salary" step="0.01" required>
+                        </div>
 
-        <label for="salary">Total Salary:</label>
-        <input type="number" step="0.01" id="salary" name="salary" value="{{ salary_record.salary }}" required>
+                        <div class="d-flex justify-content-center gap-3">
+                            <button type="submit" class="btn btn-primary btn-lg">Update Salary</button>
+                            <a href="/drivers" class="btn btn-secondary btn-lg">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <button type="submit">Update Salary</button>
-    </form>
+    <!-- Link to local Bootstrap JS -->
+    <script src="/static/bootstrap/bootstrap.bundle.min.js"></script>
 </body>
 </html>

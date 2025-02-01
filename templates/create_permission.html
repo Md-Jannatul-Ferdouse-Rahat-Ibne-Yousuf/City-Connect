@@ -4,17 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Permission</title>
+    <!-- Linking to Bootstrap CSS -->
+    <link rel="stylesheet" href="/static/bootstrap/bootstrap.min.css">
+    <style>
+        .form-container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-top: 30px;
+        }
+        .form-title {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        .btn-custom {
+            background-color: #3498db;
+            color: white;
+            border-radius: 5px;
+            padding: 10px 20px;
+            transition: background-color 0.3s ease;
+        }
+        .btn-custom:hover {
+            background-color: #2980b9;
+        }
+        .form-label {
+            font-weight: bold;
+        }
+        input.form-control, textarea.form-control {
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
-<body>
-    <h1>Create a New Permission</h1>
-    <form action="/create-permission" method="post">
-        <label for="name">Permission Name:</label>
-        <input type="text" id="name" name="name" required>
-        
-        <label for="description">Description:</label>
-        <textarea id="description" name="description" required></textarea>
-        
-        <button type="submit">Create Permission</button>
-    </form>
+<body class="bg-light">
+    <!-- Include Navbar -->
+    {% include 'navbar.html' %}
+
+    <div class="container-fluid d-flex">
+        <!-- Sidebar Section -->
+        <div class="col-3">
+            {% include 'sidebar.html' %}
+        </div>
+
+        <!-- Main Content Section -->
+        <div class="col-9 main-content p-4">
+            <div class="form-container">
+                <h1 class="form-title">Create a New Permission</h1>
+                <form action="/create-permission" method="post">
+                    <div class="mb-4">
+                        <label for="name" class="form-label">Permission Name:</label>
+                        <input type="text" id="name" name="name" class="form-control" required>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="description" class="form-label">Description:</label>
+                        <textarea id="description" name="description" class="form-control" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-custom btn-lg w-100">Create Permission</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Linking Bootstrap JS -->
+    <script src="/static/bootstrap/bootstrap.bundle.min.js"></script>
 </body>
 </html>

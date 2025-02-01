@@ -14,15 +14,27 @@ station_router = APIRouter()
 @station_router.get("/stations", response_class=HTMLResponse)
 async def get_stations(request: Request, db: Session = Depends(get_db), current_user: dict = Depends(require_permission("ManageStations"))):
     try:
+        user = crud.get_user_by_username(db, current_user["username"])
+        user_id = user["id"]
+        
+        # Fetch roles of the current user
+        roles = crud.get_user_roles(db, user_id)
+        role_names = [role['name'] for role in roles]
         stations = crud.get_stations(db)
-        return templates.TemplateResponse("stations.html", {"request": request, "stations": stations})
+        return templates.TemplateResponse("stations.html", {"request": request, "stations": stations, "current_user": user, "role_names": role_names})
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
 
 @station_router.get("/stations/new", response_class=HTMLResponse)
 async def create_station(request: Request, db: Session = Depends(get_db), current_user: dict = Depends(require_permission("ManageStations"))):
-    return templates.TemplateResponse("create_station.html", {"request": request})
+    user = crud.get_user_by_username(db, current_user["username"])
+    user_id = user["id"]
+    
+    # Fetch roles of the current user
+    roles = crud.get_user_roles(db, user_id)
+    role_names = [role['name'] for role in roles]
+    return templates.TemplateResponse("create_station.html", {"request": request, "current_user": user, "role_names": role_names})
 
 @station_router.post("/stations/new")
 async def create_station(
@@ -74,28 +86,47 @@ async def update_station(
         )
 
 
-@station_router.get("router/station", response_class=HTMLResponse)
+@station_router.get("/stops", response_class=HTMLResponse)
 async def get_stations(request: Request, db: Session = Depends(get_db), current_user: dict = Depends(require_permission("ManageStations"))):
     try:
-        router_stations = crud.get_router_stations(db)
-        return templates.TemplateResponse("router_stations.html", {"request": request, "router_stations": router_stations})
+        stops = crud.get_stops(db)
+        user = crud.get_user_by_username(db, current_user["username"])
+        user_id = user["id"]
+        
+        # Fetch roles of the current user
+        roles = crud.get_user_roles(db, user_id)
+        role_names = [role['name'] for role in roles]
+        return templates.TemplateResponse("stops.html", {"request": request, "stops": stops, "current_user": user, "role_names": role_names})
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
 
 
-@station_router.get("router/station/new", response_class=HTMLResponse)
+@station_router.get("/stops/new", response_class=HTMLResponse)
 async def create_station(request: Request, db: Session = Depends(get_db), current_user: dict = Depends(require_permission("ManageStations"))):
-    return templates.TemplateResponse("create_station.html", {"request": request})
+    
+    stations = crud.get_stations(db)
+    routes = crud.get_routes(db)
+    user = crud.get_user_by_username(db, current_user["username"])
+    user_id = user["id"]
+    
+    # Fetch roles of the current user
+    roles = crud.get_user_roles(db, user_id)
+    role_names = [role['name'] for role in roles]
+    return templates.TemplateResponse("create_stop.html", {"request": request, 
+                                                           "routes": routes, 
+                                                           "stations": stations, 
+                                                           "current_user": user, 
+                                                           "role_names": role_names})
 
-@station_router.post("router/stations/new")
+@station_router.post("/stops/new")
 async def create_station(
     name: str = Form(...), 
     db: Session = Depends(get_db), current_user: dict = Depends(require_permission("ManageStations"))
 ):
     try:
         crud.create_station(db, name)
-        return RedirectResponse(url=f"/stations?message=station created successfully!", status_code=303)
+        return RedirectResponse(url=f"/stops?message=stop created successfully!", status_code=303)
 
     except Exception as e:
-        return RedirectResponse(url=f"/stations?error={str(e)}", status_code=303)
+        return RedirectResponse(url=f"/stops?error={str(e)}", status_code=303)

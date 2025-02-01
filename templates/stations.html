@@ -4,93 +4,87 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stations List</title>
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <style>
-        header {
-            background-color: #007BFF;
-            color: white;
-            padding: 1em;
-            text-align: center;
-        }
-        nav {
-            text-align: center;
-            margin-top: 1em;
-        }
-        nav a {
-            margin: 0 10px;
-            color: white;
-            text-decoration: none;
-        }
-        nav a:hover {
-            text-decoration: underline;
-        }
-    </style>
-    
 </head>
 <body>
-    <header>
-        <h1>City Connect</h1>
-        <nav>
-            <a href="/">Home</a>
-            <a href="/login">Login</a>
-            <a href="/dashboard">Dashboard</a>
-        </nav>
-    </header>
-    <div class="container mt-5">
-        <h1 class="mb-4">Station List</h1>
-        <table class="table table-striped table-hover">
-            <thead>
-                <tr>
-                    <th>Station ID</th>
-                    <th>Name</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for station in stations %}
-                <tr>
-                    <td>{{ station.id }}</td>
-                    <td>{{ station.name }}</td> 
-                    <td>
-                        <a href="/stations/{{ station.id }}/edit/" class="btn btn-sm btn-warning">Edit</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <!-- Include Navbar -->
+    {% include 'navbar.html' %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Include Sidebar -->
+            <div class="col-md-3">
+                {% include 'sidebar.html' %}
+            </div>
+
+            <div class="col-md-9">
+                <div class="container mt-5">
+                    <h1 class="mb-4 text-primary">Station List</h1>
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <table class="table table-bordered table-hover table-striped table-responsive">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Station ID</th>
+                                        <th>Name</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for station in stations %}
+                                    <tr>
+                                        <td>{{ station.id }}</td>
+                                        <td>{{ station.name }}</td>
+                                        <td>
+                                            <a href="/stations/{{ station.id }}/edit/" class="btn btn-warning btn-sm">Edit</a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Parse the URL for 'message' or 'error' parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const message = urlParams.get('message');
+        const error = urlParams.get('error');
+
+        // Display a success toast if 'message' exists
+        if (message) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: message,
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+        }
+
+        // Display an error toast if 'error' exists
+        if (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: error,
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+        }
+    </script>
 </body>
 </html>
-
-<script>
-    // Parse the URL for 'message' or 'error' parameters
-    const urlParams = new URLSearchParams(window.location.search);
-    const message = urlParams.get('message');
-    const error = urlParams.get('error');
-
-    // Display a success toast if 'message' exists
-    if (message) {
-        Swal.fire({
-            icon: 'success',
-            title: 'Success',
-            text: message,
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 3000
-        });
-    }
-
-    // Display an error toast if 'error' exists
-    if (error) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: error,
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 3000
-        });
-    }
-</script>

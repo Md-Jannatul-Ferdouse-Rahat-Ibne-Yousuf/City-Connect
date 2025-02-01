@@ -120,7 +120,14 @@ async def assign_route(
 async def get_drivers(request: Request, db: Session = Depends(get_db), current_user: dict = Depends(require_permission("ManageDrivers"))):
     try:
         drivers = crud.get_drivers(db)
-        return templates.TemplateResponse("drivers.html", {"request": request, "drivers": drivers})
+
+        user = crud.get_user_by_username(db, current_user["username"])
+        user_id = user["id"]
+        
+        roles = crud.get_user_roles(db, user_id)
+        role_names = [role['name'] for role in roles]
+
+        return templates.TemplateResponse("drivers.html", {"request": request, "drivers": drivers, "current_user": user, "role_names": role_names})
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
@@ -141,7 +148,15 @@ async def get_driver_salary(request: Request, driver_id: int, db: Session = Depe
                 "hours_worked": 0,
             }]
         print(f"Driver: {driver_salary}")
-        return templates.TemplateResponse("driver_salaries.html", {"request": request, "driver_salary": driver_salary})
+
+        user = crud.get_user_by_username(db, current_user["username"])
+        user_id = user["id"]
+        
+        # Fetch roles of the current user
+        roles = crud.get_user_roles(db, user_id)
+        role_names = [role['name'] for role in roles]
+
+        return templates.TemplateResponse("driver_salaries.html", {"request": request, "driver_salary": driver_salary, "current_user": user, "role_names": role_names})
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
@@ -157,7 +172,15 @@ async def edit_driver(
         driver = crud.get_driver_by_id(db, driver_id)
         if not driver:
             raise HTTPException(status_code=404, detail="Driver not found.")
-        return templates.TemplateResponse("edit_driver.html", {"request": request, "driver": driver})
+
+        user = crud.get_user_by_username(db, current_user["username"])
+        user_id = user["id"]
+        
+        # Fetch roles of the current user
+        roles = crud.get_user_roles(db, user_id)
+        role_names = [role['name'] for role in roles]
+
+        return templates.TemplateResponse("edit_driver.html", {"request": request, "driver": driver, "current_user": user, "role_names": role_names})
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
@@ -187,8 +210,14 @@ async def update_driver(
 
 
 @hr_router.get("/add-salary/{driver_id}")
-async def add_salary_page(request:Request, driver_id: int):
-    return templates.TemplateResponse("add_salary.html", {"request": request, "driver_id": driver_id})
+async def add_salary_page(request:Request, driver_id: int, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
+    user = crud.get_user_by_username(db, current_user["username"])
+    user_id = user["id"]
+    
+    # Fetch roles of the current user
+    roles = crud.get_user_roles(db, user_id)
+    role_names = [role['name'] for role in roles]
+    return templates.TemplateResponse("add_salary.html", {"request": request, "driver_id": driver_id, "current_user": user, "role_names": role_names})
 
 
 @hr_router.post("/add-salary/{driver_id}")
@@ -210,12 +239,21 @@ async def add_salary(
 
 
 @hr_router.get("/update-salary/{salary_id}")
-async def show_update_salary(request: Request, salary_id: int, db: Session = Depends(get_db)):
+async def show_update_salary(request: Request, salary_id: int, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
     try:
         salary_record = crud.get_salary_record(db, salary_id)
         if not salary_record:
             raise HTTPException(status_code=404, detail="Salary record not found.")
-        return templates.TemplateResponse("update_salary.html", {"request": request, "salary_id": salary_id, "salary_record": salary_record})
+        
+        user = crud.get_user_by_username(db, current_user["username"])
+        user_id = user["id"]
+        
+        # Fetch roles of the current user
+        roles = crud.get_user_roles(db, user_id)
+        role_names = [role['name'] for role in roles]
+        return templates.TemplateResponse("update_salary.html", {"request": request, "salary_id": salary_id, 
+                                                                 "salary_record": salary_record, 
+                                                                 "current_user": user, "role_names": role_names})
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 

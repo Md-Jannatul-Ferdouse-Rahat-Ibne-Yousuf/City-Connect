@@ -1,4 +1,22 @@
 <!-- Sidebar -->
+ <style>
+    /* Custom styles for sidebar */
+    .sidebar {
+            height: 100vh;
+            position: fixed;
+            top: 75px; /* Adjust based on the height of the navbar */
+            left: 0;
+            width: 250px;
+            background-color: #f8f9fa;
+            padding-top: 20px;
+            z-index: 1;
+        }
+
+    .content {
+        margin-left: 260px; /* Ensure content is not covered by the sidebar */
+        padding-top: 20px; /* Padding for the content to avoid overlap with navbar */
+    }
+ </style>
 <div class="sidebar bg-dark p-3">
     <!-- Admin Actions -->
     {% if 'Admin' in role_names %}
@@ -16,7 +34,7 @@
         <div class="list-group">
             <a href="/drivers" class="list-group-item list-group-item-action">View Driver List</a>
             <a href="/register" class="list-group-item list-group-item-action">Add New Driver</a>
-            <a href="/timetable" class="list-group-item list-group-item-action">View Timetable List</a>
+            <!-- <a href="/timetable" class="list-group-item list-group-item-action">View Timetable List</a> -->
         </div>
     {% endif %}
 
@@ -25,8 +43,6 @@
         <div class="list-group">
             <a href="/routes" class="list-group-item list-group-item-action">View Route List</a>
             <a href="/routes/new" class="list-group-item list-group-item-action">Create New Route</a>
-            <a href="/stops" class="list-group-item list-group-item-action">View Stop List</a>
-            <a href="/stops/new" class="list-group-item list-group-item-action">Create New Stop</a>
             <a href="/timetables" class="list-group-item list-group-item-action">View Timetable List</a>
             <a href="/timetables/new" class="list-group-item list-group-item-action">Create New Timetable</a>
         </div>

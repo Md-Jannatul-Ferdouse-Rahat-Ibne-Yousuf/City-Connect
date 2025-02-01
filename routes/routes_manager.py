@@ -14,14 +14,26 @@ route_router = APIRouter()
 async def get_routes(request: Request, db: Session = Depends(get_db), current_user: dict = Depends(require_permission("ManageRoutes"))):
     try:
         routes = crud.get_routes(db)
-        return templates.TemplateResponse("routes.html", {"request": request, "routes": routes})
+        user = crud.get_user_by_username(db, current_user["username"])
+        user_id = user["id"]
+        
+        # Fetch roles of the current user
+        roles = crud.get_user_roles(db, user_id)
+        role_names = [role['name'] for role in roles]
+        return templates.TemplateResponse("routes.html", {"request": request, "routes": routes, "current_user": user, "role_names": role_names})
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
 @route_router.get("/routes/new", response_class=HTMLResponse)
 async def create_route(request: Request, db: Session = Depends(get_db), current_user: dict = Depends(require_permission("ManageRoutes"))):
     stations = crud.get_stations(db)
-    return templates.TemplateResponse("create_route.html", {"request": request, "stations": stations})
+    user = crud.get_user_by_username(db, current_user["username"])
+    user_id = user["id"]
+    
+    # Fetch roles of the current user
+    roles = crud.get_user_roles(db, user_id)
+    role_names = [role['name'] for role in roles]
+    return templates.TemplateResponse("create_route.html", {"request": request, "stations": stations, "current_user": user, "role_names": role_names})
 
 @route_router.post("/routes/new")
 async def create_route(
@@ -78,7 +90,13 @@ async def update_route(
 async def get_timetables(request: Request, db: Session = Depends(get_db), current_user: dict = Depends(require_permission("ManageRoutes"))):
     try:
         timetables = crud.get_timetables(db)
-        return templates.TemplateResponse("timetables.html", {"request": request, "timetables": timetables})
+        user = crud.get_user_by_username(db, current_user["username"])
+        user_id = user["id"]
+        
+        # Fetch roles of the current user
+        roles = crud.get_user_roles(db, user_id)
+        role_names = [role['name'] for role in roles]
+        return templates.TemplateResponse("timetables.html", {"request": request, "timetables": timetables, "current_user": user, "role_names": role_names})
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
@@ -88,11 +106,19 @@ async def create_timetable(request: Request, db: Session = Depends(get_db), curr
     stations = crud.get_stations(db)
     buses = crud.get_buses(db)
     drivers = crud.get_drivers(db)
+    user = crud.get_user_by_username(db, current_user["username"])
+    user_id = user["id"]
+    
+    # Fetch roles of the current user
+    roles = crud.get_user_roles(db, user_id)
+    role_names = [role['name'] for role in roles]
     return templates.TemplateResponse("create_timetable.html", {"request": request, 
                                                             "stations": stations,
                                                             "routes": routes,
                                                             "drivers": drivers,
-                                                            "buses": buses})
+                                                            "buses": buses, 
+                                                            "current_user": user, 
+                                                            "role_names": role_names})
 
 @route_router.post("/timetables/new")
 async def create_timetable(

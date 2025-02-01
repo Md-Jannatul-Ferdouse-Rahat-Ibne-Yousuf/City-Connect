@@ -28,7 +28,7 @@ def get_db():
 create_users_table = """
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) UNIQUE NOT NULL,
+    username VARCHAR(250) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     phone_number VARCHAR(15),
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS users (
 create_roles_table = """
 CREATE TABLE IF NOT EXISTS roles (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50) UNIQUE NOT NULL,
+    name VARCHAR(250) UNIQUE NOT NULL,
     description VARCHAR(255)
 );
 """
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS roles (
 create_permissions_table = """
 CREATE TABLE IF NOT EXISTS permissions (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50) UNIQUE NOT NULL,
+    name VARCHAR(250) UNIQUE NOT NULL,
     description VARCHAR(255)
 );
 """
@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS customers (
 create_stations_table = """
 CREATE TABLE IF NOT EXISTS stations (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(20) NOT NULL
+    name VARCHAR(250) NOT NULL
 );
 """
 
@@ -123,8 +123,8 @@ CREATE TABLE IF NOT EXISTS stops (
 create_bus_table = """
 CREATE TABLE IF NOT EXISTS bus (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    make VARCHAR(30) NOT NULL,
-    model VARCHAR(30) NOT NULL,
+    make VARCHAR(250) NOT NULL,
+    model VARCHAR(250) NOT NULL,
     year INT NOT NULL
 );
 """

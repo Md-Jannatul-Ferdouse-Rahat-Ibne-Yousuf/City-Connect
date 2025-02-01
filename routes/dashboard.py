@@ -12,9 +12,9 @@ templates = Jinja2Templates(directory="templates")
 dashboard_router = APIRouter()
 
 @dashboard_router.get("/dashboard", response_class=HTMLResponse)
-async def dashboard(request: Request, db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):
+async def dashboard(request: Request, db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
     try:
-        user = crud.get_user_by_username(db, current_user)
+        user = crud.get_user_by_username(db, current_user["username"])
         user_id = user["id"]
         
         # Fetch roles of the current user

@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Request, Depends, Form, HTTPException
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 
@@ -21,6 +21,11 @@ def register_form(request: Request, db: Session = Depends(get_db)):
         user = crud.get_user_by_username(db, username)
         user_id = user['id'] 
         permissions = crud.get_user_permissions(db, user_id)
+    
+    if username is not None and not ("FullAccess" in permissions or "ManageDrivers" in permissions):
+        return RedirectResponse(url="/", status_code=303)
+
+    
     return templates.TemplateResponse(
         "register.html", {"request": request, "roles": roles, "username": username, "permissions": permissions}
     )

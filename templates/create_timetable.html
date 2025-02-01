@@ -9,59 +9,73 @@
     <link href="/static/bootstrap/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container mt-5">
-        <div class="card shadow-sm">
-            <div class="card-header bg-primary text-white">
-                <h1 class="h3 mb-0">Create Timetable</h1>
+    <!-- Include Navbar -->
+    {% include 'navbar.html' %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Include Sidebar -->
+            <div class="col-md-3">
+                {% include 'sidebar.html' %}
             </div>
-            <div class="card-body">
-                <form action="/timetables/new" method="post">
-                    <div class="mb-3">
-                        <label for="route_id" class="form-label">Select Route</label>
-                        <select name="route_id" id="route_id" class="form-control" required>
-                            <option value="">Select a Route</option>
-                            {% for route in routes %}
-                                <option value="{{ route.id }}">{{ route.name }}</option>
-                            {% endfor %}
-                        </select>
+
+            <div class="col-md-9">
+                <div class="container mt-5">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-primary text-white">
+                            <h1 class="h3 mb-0">Create Timetable</h1>
+                        </div>
+                        <div class="card-body">
+                            <form action="/timetables/new" method="post">
+                                <div class="mb-3">
+                                    <label for="route_id" class="form-label">Select Route</label>
+                                    <select name="route_id" id="route_id" class="form-control" required>
+                                        <option value="">Select a Route</option>
+                                        {% for route in routes %}
+                                            <option value="{{ route.id }}">{{ route.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="bus_id" class="form-label">Select Bus</label>
+                                    <select name="bus_id" id="bus_id" class="form-control" required>
+                                        <option value="">Select a Bus</option>
+                                        {% for bus in buses %}
+                                            <option value="{{ bus.id }}">
+                                                {{ bus.make }} - {{ bus.model }} ({{ bus.year }})
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="driver_id" class="form-label">Select Driver</label>
+                                    <select name="driver_id" id="driver_id" class="form-control" required>
+                                        <option value="">Select a Driver</option>
+                                        {% for driver in drivers %}
+                                            <option value="{{ driver.user_id }}">{{ driver.username }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="station_id" class="form-label">Select Station</label>
+                                    <select name="station_id" id="station_id" class="form-control" required>
+                                        <option value="">Select a Station</option>
+                                        {% for station in stations %}
+                                            <option value="{{ station.id }}">{{ station.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="scheduled_time" class="form-label">Scheduled Time</label>
+                                    <input type="datetime-local" id="scheduled_time" name="scheduled_time" class="form-control" required>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-success">Create Timetable</button>
+                                <a href="/routes" class="btn btn-secondary">Cancel</a>
+                            </form>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="bus_id" class="form-label">Select Bus</label>
-                        <select name="bus_id" id="bus_id" class="form-control" required>
-                            <option value="">Select a Bus</option>
-                            {% for bus in buses %}
-                                <option value="{{ bus.id }}">
-                                    {{ bus.make }} - {{ bus.model }} ({{ bus.year }})
-                                </option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="driver_id" class="form-label">Select Driver</label>
-                        <select name="driver_id" id="driver_id" class="form-control" required>
-                            <option value="">Select a Driver</option>
-                            {% for driver in drivers %}
-                                <option value="{{ driver.user_id }}">{{ driver.username }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="station_id" class="form-label">Select Station</label>
-                        <select name="station_id" id="station_id" class="form-control" required>
-                            <option value="">Select a Station</option>
-                            {% for station in stations %}
-                                <option value="{{ station.id }}">{{ station.name }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="scheduled_time" class="form-label">Scheduled Time</label>
-                        <input type="datetime-local" id="scheduled_time" name="scheduled_time" class="form-control" required>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-success">Create Timetable</button>
-                    <a href="/routes" class="btn btn-secondary">Cancel</a>
-                </form>
+                </div>
             </div>
         </div>
     </div>

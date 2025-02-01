@@ -4,121 +4,103 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Driver Salaries</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <style>
+        /* Optional styling to make sidebar and main content work together */
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+        .main-container {
+            display: flex;
+            flex: 1;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #f8f9fa;
             padding: 20px;
+            height: 100vh;
+            position: sticky;
+            top: 0;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
+        .content {
+            flex: 1;
+            padding: 20px;
+            margin-left: 250px; /* Make space for the sidebar */
         }
-        table th, table td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        table th {
-            background-color: #f4f4f4;
-        }
-        .actions button {
-            margin: 0 5px;
-        }
-        form {
-            display: inline;
-        }
-        .top-actions {
-            margin-bottom: 20px;
-        }
-        .top-actions button {
-            padding: 10px 15px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        .top-actions button:hover {
-            background-color: #0056b3;
-        }
-        header {
-            background-color: #007BFF;
-            color: white;
-            padding: 1em;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-        nav {
-            text-align: center;
-            margin-top: 1em;
-        }
-        nav a {
-            margin: 0 10px;
-            color: white;
-            text-decoration: none;
-        }
-        nav a:hover {
-            text-decoration: underline;
+        .table-container {
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>City Connect</h1>
-        <nav>
-            <a href="/">Home</a>
-            <a href="/login">Login</a>
-            <a href="/dashboard">Dashboard</a>
-        </nav>
-    </header>
-    <div class="top-actions">
-        <!-- Add New Salary Record Button -->
-        <form action="/add-salary/{{ driver_salary[0].driver_id }}" method="get">
-            <button type="submit">Add New Salary Record</button>
-        </form>
+    <!-- Include Navbar -->
+    {% include 'navbar.html' %}
+
+    <div class="main-container">
+        <!-- Include Sidebar -->
+        <div class="sidebar">
+            {% include 'sidebar.html' %}
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="content">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Driver Salary Details</h2>
+                <form action="/add-salary/{{ driver_salary[0].driver_id }}" method="get">
+                    <button type="submit" class="btn btn-primary">Add New Salary Record</button>
+                </form>
+            </div>
+
+            <!-- Driver Information -->
+            <div class="mb-4">
+                <h3>Driver Information</h3>
+                <p><strong>Driver ID:</strong> {{ driver_salary[0].driver_id }}</p>
+                <p><strong>License Number:</strong> {{ driver_salary[0].license_number }}</p>
+                <p><strong>Experience Years:</strong> {{ driver_salary[0].experience_years }}</p>
+            </div>
+
+            <!-- Salary Records -->
+            <h3>Salary Records</h3>
+            {% if driver_salary %}
+                <div class="table-container">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Year</th>
+                                <th>Month</th>
+                                <th>Hourly Rate</th>
+                                <th>Hours Worked</th>
+                                <th>Total Salary</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for record in driver_salary %}
+                                <tr>
+                                    <td>{{ record.year }}</td>
+                                    <td>{{ record.month }}</td>
+                                    <td>{{ record.hourly }}</td>
+                                    <td>{{ record.hours_worked }}</td>
+                                    <td>{{ record.salary }}</td>
+                                    <td>
+                                        <form action="/update-salary/{{ record.id }}" method="get" style="display:inline;">
+                                            <button type="submit" class="btn btn-warning btn-sm">Update</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p>No salary records found for this driver.</p>
+            {% endif %}
+        </div>
     </div>
 
-    <h1>Driver Salary Details</h1>
-
-    <h2>Driver Information</h2>
-    <p><strong>Driver ID:</strong> {{ driver_salary[0].driver_id }}</p>
-    <p><strong>License Number:</strong> {{ driver_salary[0].license_number }}</p>
-    <p><strong>Experience Years:</strong> {{ driver_salary[0].experience_years }}</p>
-
-    <h2>Salary Records</h2>
-    {% if driver_salary %}
-        <table>
-            <thead>
-                <tr>
-                    <th>Year</th>
-                    <th>Month</th>
-                    <th>Hourly Rate</th>
-                    <th>Hours Worked</th>
-                    <th>Total Salary</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for record in driver_salary %}
-                    <tr>
-                        <td>{{ record.year }}</td>
-                        <td>{{ record.month }}</td>
-                        <td>{{ record.hourly }}</td>
-                        <td>{{ record.hours_worked }}</td>
-                        <td>{{ record.salary }}</td>
-                        <td class="actions">
-                            <!-- Update Button -->
-                            <form action="/update-salary/{{ record.id }}" method="get">
-                                <button type="submit">Update</button>
-                            </form>
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <p>No salary records found for this driver.</p>
-    {% endif %}
+    <!-- Bootstrap and JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
