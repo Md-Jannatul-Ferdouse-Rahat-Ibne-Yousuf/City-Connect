@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Route Timetables</title>
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/static/bootstrap/bootstrap.min.css">
+
+    <style>
+        body {
+            background-color: #f9f9f9;
+        }
+        .card {
+            transition: transform 0.2s ease-in-out;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    {% include 'navbar.html' %}
+
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Route: {{ route.name }}</h2>
+        <p class="text-center"><strong>From:</strong> {{ route.origin_name }} <strong>To:</strong> {{ route.destination_name }}</p>
+        
+        <div class="row justify-content-center">
+            {% if timetables %}
+                <table class="table table-bordered col-md-8">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Bus</th>
+                            <th>Driver</th>
+                            <th>Station</th>
+                            <th>Scheduled Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for timetable in timetables %}
+                            <tr>
+                                <td>{{ timetable.bus_name }}</td>
+                                <td>{{ timetable.driver_name }}</td>
+                                <td>{{ timetable.station_name }}</td>
+                                <td>{{ timetable.scheduled_time }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p class="text-center">No timetables available for this route.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+        <p class="mb-0">&copy; 2025 City Connect. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="/static/bootstrap/bootstrap.bundle.min.js"></script>
+</body>
+</html>

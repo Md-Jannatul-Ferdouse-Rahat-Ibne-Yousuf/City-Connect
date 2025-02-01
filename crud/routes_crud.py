@@ -33,3 +33,21 @@ def create_route(db: Session, route_name: str, origin_id: int, destination_id: i
     })
 
     db.commit()
+
+def get_route_by_id(db: Session, route_id: int):
+    query = text("""
+        SELECT 
+            r.id,
+            r.name,
+            r.origin_id,
+            s1.name AS origin_name,
+            r.destination_id,
+            s2.name AS destination_name
+        FROM routes r
+        INNER JOIN stations s1 ON r.origin_id = s1.id
+        INNER JOIN stations s2 ON r.destination_id = s2.id
+        WHERE r.id = :route_id
+    """)
+
+    result = db.execute(query, {"route_id": route_id}).mappings().first()
+    return dict(result) if result else None

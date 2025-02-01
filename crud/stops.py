@@ -33,6 +33,21 @@ def create_stop(db: Session, route_id: int, station_id: int, stop_number: int):
 
     db.commit()
 
+def get_stops_by_route_id(db: Session, route_id: int):
+    query = text("""
+        SELECT 
+            st.stop_number,
+            s.name AS station_name
+        FROM stops st
+        INNER JOIN stations s ON st.station_id = s.id
+        INNER JOIN routes r ON st.route_id = r.id
+        WHERE st.route_id = :route_id
+        ORDER BY st.stop_number
+    """)
+
+    result = db.execute(query, {"route_id": route_id})
+    return [dict(row) for row in result.mappings()] if result else []
+
 def get_station_by_id(db: Session, station_id: int):
     query = text("""
                  SELECT id, name
