@@ -41,7 +41,7 @@ def login(
         request.session["permissions"] = []
 
 
-    return RedirectResponse(url="/", status_code=status.HTTP_303_SEE_OTHER)
+    return RedirectResponse(url="/dashboard", status_code=status.HTTP_303_SEE_OTHER)
 
 
 @auth_router.get("/logout")
