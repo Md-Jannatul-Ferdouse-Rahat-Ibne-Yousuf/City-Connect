@@ -134,7 +134,7 @@ async def get_drivers(request: Request, db: Session = Depends(get_db), current_u
     
 
 @hr_router.get("/driver-salaries/{driver_id}")
-async def get_driver_salary(request: Request, driver_id: int, db: Session = Depends(get_db), current_user: dict = Depends(require_permission("ManageDrivers"))):
+async def get_driver_salary(request: Request, driver_id: int, db: Session = Depends(get_db), current_user: dict = Depends(require_permission("ViewDriverSalary"))):
     try:
         driver_salary = crud.get_driver_salary(db, driver_id)
         if not driver_salary:
@@ -156,7 +156,14 @@ async def get_driver_salary(request: Request, driver_id: int, db: Session = Depe
         roles = crud.get_user_roles(db, user_id)
         role_names = [role['name'] for role in roles]
 
-        return templates.TemplateResponse("driver_salaries.html", {"request": request, "driver_salary": driver_salary, "current_user": user, "role_names": role_names})
+        permissions = crud.get_user_permissions(db, user_id)
+
+        return templates.TemplateResponse("driver_salaries.html", {"request": request, 
+                                                                   "driver_salary": driver_salary, 
+                                                                   "permissions": permissions,
+                                                                   "user_id": user_id,
+                                                                   "current_user": user, 
+                                                                   "role_names": role_names})
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 

@@ -37,8 +37,17 @@ async def edit_bus(
         bus = crud.get_bus_by_id(db, bus_id)
         if not bus:
             raise HTTPException(status_code=404, detail="Bus not found")
+        
+        user = crud.get_user_by_username(db, current_user["username"])
+        user_id = user["id"]
+
+        print(f"User: {user_id}")
+        
+        # Fetch roles of the current user
+        roles = crud.get_user_roles(db, user_id)
+        role_names = [role['name'] for role in roles]
         return templates.TemplateResponse(
-            "edit_bus.html", {"request": request, "bus": bus}
+            "edit_bus.html", {"request": request, "bus": bus, "current_user": user, "user_id": user_id, "role_names": role_names}
         )
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
@@ -149,8 +158,16 @@ async def edit_maintenance(
         if not buses:
             raise HTTPException(status_code=404, detail="Buses not found")
         
+        user = crud.get_user_by_username(db, current_user["username"])
+        user_id = user["id"]
+
+        print(f"User: {user_id}")
+        
+        # Fetch roles of the current user
+        roles = crud.get_user_roles(db, user_id)
+        role_names = [role['name'] for role in roles]
         return templates.TemplateResponse(
-            "edit_maintenance.html", {"request": request, "maintenance": maintenance, "buses": buses}
+            "edit_maintenance.html", {"request": request, "maintenance": maintenance, "buses": buses, "current_user": user, "user_id": user_id, "role_names": role_names}
         )
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))

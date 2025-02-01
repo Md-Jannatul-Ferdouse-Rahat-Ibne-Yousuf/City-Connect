@@ -41,6 +41,7 @@ app.include_router(fleet_router)
 app.include_router(station_router)
 app.include_router(route_router)
 app.include_router(logout_router)
+app.include_router(driver_router)
 
 
 if __name__ == "__main__":

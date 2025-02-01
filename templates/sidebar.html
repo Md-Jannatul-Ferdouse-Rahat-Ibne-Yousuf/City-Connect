@@ -67,4 +67,12 @@
             <a href="/stops/new" class="list-group-item list-group-item-action">Add New Stop</a>
         </div>
     {% endif %}
+
+    {% if 'Driver' in role_names %}
+        <div class="list-group">
+            <a href="/driver-salaries/{{ user_id }}" class="list-group-item list-group-item-action">View Salary</a>
+            <a href="/timetables/driver/{{ user_id }}" class="list-group-item list-group-item-action">View Timetables</a>
+
+        </div>
+    {% endif %}
 </div>

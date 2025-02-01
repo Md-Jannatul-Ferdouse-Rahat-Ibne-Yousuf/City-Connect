@@ -16,11 +16,13 @@ async def dashboard(request: Request, db: Session = Depends(get_db), current_use
     try:
         user = crud.get_user_by_username(db, current_user["username"])
         user_id = user["id"]
+
+        print(f"User: {user_id}")
         
         # Fetch roles of the current user
         roles = crud.get_user_roles(db, user_id)
         role_names = [role['name'] for role in roles]
         
-        return templates.TemplateResponse("dashboard.html", {"request": request, "current_user": user, "role_names": role_names})
+        return templates.TemplateResponse("dashboard.html", {"request": request, "current_user": user, "user_id": user_id, "role_names": role_names})
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
