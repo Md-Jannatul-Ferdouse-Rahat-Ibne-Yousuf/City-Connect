@@ -261,6 +261,7 @@ async def show_update_salary(request: Request, salary_id: int, db: Session = Dep
 async def update_salary(
     request: Request,
     salary_id: int,
+    driver_id: int = Form(...),
     year: int = Form(...),
     month: str = Form(...),
     hourly: float = Form(...),
@@ -269,8 +270,8 @@ async def update_salary(
     db: Session = Depends(get_db)
 ):
     try:
-        driver_id = crud.update_salary(db, salary_id, year, month, hourly, hours_worked, salary)
-        if not driver_id:
+        result = crud.update_salary(db, salary_id, year, month, hourly, hours_worked, salary)
+        if not result:
             raise HTTPException(status_code=404, detail="Salary record not found.")
         return RedirectResponse(url=f"/driver-salaries/{driver_id}", status_code=303)
     except Exception as e:

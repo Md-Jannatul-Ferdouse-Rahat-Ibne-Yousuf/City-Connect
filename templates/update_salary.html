@@ -20,23 +20,59 @@
 
             <!-- Main Content Section -->
             <div class="col-12 col-md-9 content px-6">
-                <h1 class="text-primary text-center mb-4">Update Driver Salary</h1>
+                <h1 class="text-primary text-center mb-4">Update Driver Salary: Driver ID - {{ salary_record.driver_id }}</h1>
 
                 <!-- Update Driver Salary Form -->
                 <div class="card shadow-lg p-4 mx-auto" style="max-width: 600px;">
-                    <form method="POST" action="/driver-salary">
+                    <form method="POST" action="/update-salary/{{ salary_id }}">
+
+                        <!-- Existing Salary Details to Update -->
                         <div class="mb-3">
-                            <label for="driver_id" class="form-label">Driver ID</label>
-                            <input type="number" class="form-control" id="driver_id" name="driver_id" required>
+                            <input type="number" class="form-control" id="driver_id" name="driver_id" value="{{ salary_record.driver_id }}" hidden>
                         </div>
+
+                        <div class="mb-3">
+                            <label for="year" class="form-label">Year</label>
+                            <input type="number" class="form-control" id="year" name="year" value="{{ salary_record.year }}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="month" class="form-label">Month:</label>
+                            <select id="month" name="month" class="form-select" required>
+                                <option value="Jan" {% if salary_record.month == 'Jan' %}selected{% endif %}>January</option>
+                                <option value="Feb" {% if salary_record.month == 'Feb' %}selected{% endif %}>February</option>
+                                <option value="Mar" {% if salary_record.month == 'Mar' %}selected{% endif %}>March</option>
+                                <option value="Apr" {% if salary_record.month == 'Apr' %}selected{% endif %}>April</option>
+                                <option value="May" {% if salary_record.month == 'May' %}selected{% endif %}>May</option>
+                                <option value="Jun" {% if salary_record.month == 'Jun' %}selected{% endif %}>June</option>
+                                <option value="Jul" {% if salary_record.month == 'Jul' %}selected{% endif %}>July</option>
+                                <option value="Aug" {% if salary_record.month == 'Aug' %}selected{% endif %}>August</option>
+                                <option value="Sep" {% if salary_record.month == 'Sep' %}selected{% endif %}>September</option>
+                                <option value="Oct" {% if salary_record.month == 'Oct' %}selected{% endif %}>October</option>
+                                <option value="Nov" {% if salary_record.month == 'Nov' %}selected{% endif %}>November</option>
+                                <option value="Dec" {% if salary_record.month == 'Dec' %}selected{% endif %}>December</option>
+                            </select>
+                        </div>
+                        
+
+                        <div class="mb-3">
+                            <label for="hourly" class="form-label">Hourly Rate</label>
+                            <input type="number" class="form-control" id="hourly" name="hourly" value="{{ salary_record.hourly }}" step="0.01" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="hours_worked" class="form-label">Hours Worked</label>
+                            <input type="number" class="form-control" id="hours_worked" name="hours_worked" value="{{ salary_record.hours_worked }}" step="0.1" required>
+                        </div>
+
                         <div class="mb-3">
                             <label for="salary" class="form-label">New Salary</label>
-                            <input type="number" class="form-control" id="salary" name="salary" step="0.01" required>
+                            <input type="number" class="form-control" id="salary" name="salary" value="{{ salary_record.salary }}" step="0.01" required>
                         </div>
 
                         <div class="d-flex justify-content-center gap-3">
                             <button type="submit" class="btn btn-primary btn-lg">Update Salary</button>
-                            <a href="/drivers" class="btn btn-secondary btn-lg">Cancel</a>
+                            <a href="/driver-salaries/{{ salary_record.driver_id}}" class="btn btn-secondary btn-lg">Cancel</a>
                         </div>
                     </form>
                 </div>

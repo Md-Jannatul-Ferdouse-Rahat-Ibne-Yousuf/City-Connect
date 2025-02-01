@@ -66,11 +66,6 @@ def update_salary(
     hours_worked: int,
     salary: float
 ):
-    driver_query = text("SELECT driver_id FROM driver_salary WHERE id = :salary_id")
-    driver_result = db.execute(driver_query, {"salary_id": salary_id}).fetchone()
-
-    if not driver_result:
-        return None
     
     query = text("""
         UPDATE driver_salary
@@ -86,4 +81,4 @@ def update_salary(
         "salary": salary
     })
     db.commit()
-    return driver_result.driver_id
+    return result
