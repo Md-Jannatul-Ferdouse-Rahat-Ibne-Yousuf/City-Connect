@@ -121,11 +121,11 @@ async def create_station(request: Request, db: Session = Depends(get_db), curren
 
 @station_router.post("/stops/new")
 async def create_station(
-    name: str = Form(...), 
+    route_id: int = Form(...), station_id: int = Form(...), stop_number: int = Form(...),
     db: Session = Depends(get_db), current_user: dict = Depends(require_permission("ManageStations"))
 ):
     try:
-        crud.create_station(db, name)
+        crud.create_stop(db, route_id, station_id, stop_number)
         return RedirectResponse(url=f"/stops?message=stop created successfully!", status_code=303)
 
     except Exception as e:

@@ -8,9 +8,11 @@ def get_stops(db: Session):
                 st.route_id,
                 st.station_id,
                 st.stop_number,
-                s.name
+                s.name AS station_name,
+                r.name AS route_name
         FROM stops st
         INNER JOIN stations s ON st.station_id = s.id
+        INNER JOIN routes r ON st.route_id = r.id
                  
     """)
     result = db.execute(query)

@@ -25,6 +25,7 @@
                         <thead>
                             <tr>
                                 <th>Route ID</th>
+                                <th>Route Name</th>
                                 <th>Station ID</th>
                                 <th>Station Name</th>
                                 <th>Stop Number</th>
@@ -34,8 +35,9 @@
                             {% for stop in stops %}
                             <tr>
                                 <td>{{ stop.route_id }}</td>
+                                <td>{{ stop.route_name }}</td>
                                 <td>{{ stop.station_id }}</td>
-                                <td>{{ stop.name }}</td>
+                                <td>{{ stop.station_name }}</td>
                                 <td>{{ stop.stop_number }}</td>
                                 <td>
                                     <a href="/stops/{{ stop.id }}/edit/" class="btn btn-sm btn-warning">Edit</a>
