@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Request, Depends, Form
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
 import crud
@@ -37,7 +37,8 @@ def create_role(
 ):
     try:
         crud.create_role(db, name, description)
-        return {"message": f"Role '{name}' created successfully."}
+        return RedirectResponse(url=f"/dashboard?message=Role created successfully!", status_code=303)
+
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
@@ -68,7 +69,7 @@ def create_permission(
     ):
     try:
         crud.create_permission(db, name, description)
-        return {"message": f"Permission '{name}' created successfully."}
+        return RedirectResponse(url=f"/dashboard?message=Permission created successfully!", status_code=303)
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
@@ -105,7 +106,7 @@ def assign_permission(
     ):
     try:
         crud.assign_permission_to_role(db, role_id, permission_id)
-        return {"message": "Permission assigned to role successfully."}
+        return RedirectResponse(url=f"/dashboard?message=Permission assigned successfully!", status_code=303)
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 

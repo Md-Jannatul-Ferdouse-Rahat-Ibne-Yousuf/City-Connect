@@ -73,8 +73,16 @@ def register_user(
             role_names = [role['name'] for role in roles]
         except:
             pass
+        
+        print(f"Curr: {current_user}")
+        if current_user["username"]:
+            return RedirectResponse(
+                url=f"/dashboard?message=User%20created%20successfully",
+                status_code=303
+            )
+        
         return templates.TemplateResponse(
-        "index.html", {"request": request, "current_user": user, "role_names": role_names}
+        "login.html", {"request": request, "current_user": user, "role_names": role_names}
     )
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))

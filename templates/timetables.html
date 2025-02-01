@@ -36,7 +36,6 @@
                                 <th>Station ID</th>
                                 <th>Station Name</th>
                                 <th>Scheduled Time</th>
-                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -52,9 +51,6 @@
                                 <td>{{ timetable.station_id }}</td>
                                 <td>{{ timetable.station_name }}</td>
                                 <td>{{ timetable.scheduled_time }}</td>
-                                <td>
-                                    <a href="/timetablees/{{ timetable.id }}/edit/" class="btn btn-sm btn-warning">Edit</a>
-                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>

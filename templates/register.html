@@ -28,8 +28,16 @@
 
             // Password validation
             const password = document.getElementById('password');
-            if (!password.value.trim() || password.value.length < 6) {
-                document.getElementById('password-error').textContent = 'Password must be at least 6 characters long';
+            const passwordError = document.getElementById('password-error');
+            if (!password.value.trim() || password.value.length < 8) {
+                passwordError.textContent = 'Password must be at least 8 characters long';
+                isValid = false;
+            }
+
+            const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/;
+
+            if (!regex.test(password.value)) {
+                passwordError.textContent = 'Password must contain at least one uppercase letter, one number, and one special character';
                 isValid = false;
             }
 
@@ -51,7 +59,7 @@
             // Driver fields validation
             const licenseNumber = document.getElementById('license_number');
             const experienceYears = document.getElementById('experience_years');
-            if (roleSelect.value === '3') {
+            if (roleSelect.value === '3') { // Driver role
                 if (!licenseNumber.value.trim()) {
                     document.getElementById('license-number-error').textContent = 'License Number is required';
                     isValid = false;

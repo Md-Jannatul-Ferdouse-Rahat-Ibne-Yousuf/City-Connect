@@ -7,7 +7,6 @@
     <!-- Link to local Bootstrap CSS -->
     <link rel="stylesheet" href="/static/bootstrap/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 </head>
 <body class="bg-light">
     <!-- Include the Navbar -->
@@ -52,6 +51,39 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Parse the URL for 'message' or 'error' parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const message = urlParams.get('message');
+        const error = urlParams.get('error');
+
+        // Display a success toast if 'message' exists
+        if (message) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: message,
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+        }
+
+        // Display an error toast if 'error' exists
+        if (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: error,
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+        }
+    </script>
 
     <!-- Link to local Bootstrap JS -->
     <script src="/static/bootstrap/bootstrap.bundle.min.js"></script>
